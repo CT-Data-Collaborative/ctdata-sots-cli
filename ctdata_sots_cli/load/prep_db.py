@@ -54,7 +54,7 @@ def buildTables(conn, cursor, schemapath):
         queryParts = []
         schema_file_name = "{}.yml".format(table['name'])
         with open(os.path.join(schemapath, schema_file_name), 'r') as f:
-            schema = yaml.load(schemaFile.read())
+            schema = yaml.load(f.read())
 
         tablePK = ['PRIMARY_ID']
         for field in schema['fields']:
