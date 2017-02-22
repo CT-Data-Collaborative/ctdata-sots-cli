@@ -25,7 +25,7 @@ def dropTables(conn, cursor, schemapath):
         else:
             # no errors!
             conn.commit()
-    for table in ['business_subtype', 'business_status']:
+    for table in ['business_subtype', 'business_status', 'tx_codes', 'fips', 'full_text_index']:
         query = """DROP TABLE IF EXISTS {} CASCADE;""".format(table)
         try:
             print("Dropping Table: " + table)
@@ -37,7 +37,7 @@ def dropTables(conn, cursor, schemapath):
             # no errors!
             conn.commit()
 
-def buildTables(schemapath, conn, cursor):
+def buildTables(conn, cursor, schemapath):
     """Read schema files and build tables.
 
         Args:
