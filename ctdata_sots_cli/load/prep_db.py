@@ -68,9 +68,9 @@ def buildTables(conn, cursor, schemapath):
                 tablePK.extend([field["name"]])
 
             fieldFK = ""
-            if fk:
-                if field["fk"]:
-                    fieldFK = "references "+str(field["fk"])
+
+            if field["fk"]:
+                fieldFK = "references "+str(field["fk"])
 
             fieldDef = " ".join([field["name"], fieldType, fieldFK]).strip()
             queryParts.extend([fieldDef])
