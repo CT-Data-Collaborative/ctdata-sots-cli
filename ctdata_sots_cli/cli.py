@@ -11,7 +11,7 @@ import click
 
 from .cleaner import cleaner
 from .prep import prep_release_files
-from .load import connectDB, dropTables, buildStatusAndSubtypeTable, buildTables
+from .load.prep_db import connectDB, dropTables, buildStatusAndSubtypeTable, buildTables
 
 @click.group()
 def main():
