@@ -1,6 +1,6 @@
 import os
 import yaml
-from psycopg2 import connect
+from psycopg2 import connect, DataError, IntegrityError
 
 def connectDB(db, user, pwd, host, port):
     """Opens a psycopg2 db connction using configuration parems set in self.scriptVars."""
@@ -100,6 +100,34 @@ def buildTables(conn, cursor, schemapath):
         else:
             # no errors!
             conn.commit()
+
+def loadData(conn, cursor, schemapath, datapath):
+    with open(os.path.join(schemapath, 'structure.yml'), 'r') as f:
+        structure = yaml.load(f.read())
+    for table in structure['tables']:
+        table_file_name = "{}.csv".format(table)
+        file_path = os.path.join(datapath, table_file_name)
+
+        SQL_STATEMENT = """
+            COPY {} FROM STDIN WITH
+                CSV
+                HEADER
+                DELIMITER AS ','
+                NULL as 'null'
+            """.format(table)
+
+        with open(file_path, 'rb') as file:
+            try:
+                cursor.execute("SET datestyle to 'ISO,YMD';")
+                cursor.copy_expert(sql=SQL_STATEMENT, file=file)
+                # self._cursor.copy_from(file, table, sep=',')
+                conn.commit()
+                print("...success")
+            except (DataError, IntegrityError) as e:
+                conn.rollback()
+                print(e)
+                print(e.pgcode)
+                print("...rolling back")
 
 def buildStatusAndSubtypeTable(conn, cursor):
     q_list = []

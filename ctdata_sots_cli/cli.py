@@ -11,7 +11,8 @@ import click
 
 from .cleaner import cleaner
 from .prep import prep_release_files
-from .load.prep_db import connectDB, dropTables, buildStatusAndSubtypeTable, buildTables
+from .load.prep_db import connectDB, dropTables, buildStatusAndSubtypeTable, buildTables, loadData
+from .load.sots_models import create_engine
 
 @click.group()
 def main():
@@ -78,8 +79,34 @@ def prepdb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
     conn, cursor = connectDB(dbname, dbuser, dbpass, dbhost, dbport)
     dropTables(conn, cursor, schema)
     buildTables(conn, cursor, schema)
+    loadData(conn, cursor, schema, data)
     buildStatusAndSubtypeTable(conn, cursor)
     conn.close()
+
+@main.command()
+@click.option('--dbhost', default='0.0.0.0',
+              help='IP address of database server where data should be published to.')
+@click.option('--dbuser', default='postgres',
+              help='Database user.')
+@click.option('--dbpass', default='',
+              help='Password for database.')
+@click.option('--dbname', default='postgres',
+              help='Name of database on host where data should be publish to.')
+@click.option('--dbport', default='5432',
+              help="Port to access db at.")
+@click.option('--data', type=click.Path(),
+              help='Path to cleaned data')
+@click.argument('schema', type=click.Path(), default='.', required=False)
+def loaddb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
+    """
+    Publish SOTS data to the provided database
+
+    This will prepare the database, build tables, load data, build indices, and then cleanup
+    """
+    engine = create_engine(dbuser, dbpass, dbhost, dbport)
+
+
+
 
 
 if __name__ == '__main__':

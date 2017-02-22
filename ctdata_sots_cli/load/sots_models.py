@@ -22,8 +22,8 @@ table_mat_views = ['bus_other_join_table', 'corp_join_table', 'dom_llc_join_tabl
 Base = declarative_base(engine)
 
 
-def create_engine(DB_USER, DB_PWD, DB_HOST):
-    PG_URI = 'postgresql://{}:{}@{}:5432'.format(DB_USER, DB_PWD, DB_HOST, DB_PORT)
+def create_engine(DB_USER, DB_PWD, DB_HOST, DB_PORT):
+    PG_URI = 'postgresql://{}:{}@{}:{}'.format(DB_USER, DB_PWD, DB_HOST, DB_PORT)
     engine = create_engine(PG_URI, echo=True)
     return engine
 
@@ -55,8 +55,6 @@ def cleanup_index_mat_view(engine):
 def cleanup_index_tables(engine):
     with engine.connect() as con:
         con.execute("DROP TABLE IF EXISTS full_text_index;")
-        con.execute("DROP TABLE IF EXISTS business_status;")
-        con.execute("DROP TABLE IF EXISTS business_subtype;")
         con.execute("DROP TABLE IF EXISTS temp_index;")
 
 
@@ -318,34 +316,3 @@ class PrincipalNameIndex(Base):
             func.to_tsvector(Principal.nm_name).label('document')
         ])
     )
-
-
-
-# --------------------------------------------------------------------------------------
-# Functions for building status and subtype tables
-# --------------------------------------------------------------------------------------
-#
-def build_status_table(base, engine):
-    status = [('AC', 'Active'), ('CN', 'Cancelled'), ('CS', 'Consolidation'), ('CV', 'Converted'), ('D', 'Dissolved'),
-              ('DS', 'Unknown'), ('ER', 'Expired Reservation'), ('EX', 'Expired'), ('FF', 'Forfeited'), ('M', 'Merged'),
-              ('RC', 'Reserved Cancel'), ('RD', 'Redomesticated'), ('RG', 'Registered'), ('RN', 'Renunciated'),
-              ('RS', 'Reserved'), ('WD', 'Withdrawn'), ('RV', 'Revoked'), ('W', 'W Second'), ('RE', 'Recorded'),
-              ('PM', 'Pending Merger'), ('PC', 'Pending Conversion'), ('CO', 'Converted Out')]
-    session = loadSession(base, engine)
-    session.add_all([BusinessStatus(cd_status=x[0], description=x[1]) for x in status])
-    session.commit()
-
-
-def build_subtype_table(base, engine):
-    types = [('C', 'Corporation'), ('D', 'Domestic Limited Partnership'), ('F', 'Foreign Limited Partnership'),
-             ('G', 'Domestic Limited Liability Company'), ('H', 'Foreign Limited Liability Company'),
-             ('I', 'Domestic Limited Liability Partnership'), ('J', 'Foreign Limited Liability Partnership'),
-             ('K', 'General Partnership'), ('L', 'Domestic Statutory Trust'), ('M', 'Foreign Statutory Trust'),
-             ('O', 'Other'), (' ', 'Unknown'), ('P', 'Domestic Stock Corporation'), ('Q', 'Foreign Stock Corporation'),
-             ('R', 'Domestic Non-Stock Corporation'), ('S', 'Foreign Non-Stock Corporation'), ('T', 'All Entities'),
-             ('U', 'Domestic Credit Union Stock'), ('V', 'Domestic Credit Union Non-Stock'),
-             ('W', 'Domestic Bank Stock'), ('X', 'Domestic Bank Non-Stock'), ('Y', 'Domestic Insurance Stock'),
-             ('Z', 'Domestic Insurance Non-Stock'), ('B', 'Benefit Corporation')]
-    session = loadSession(base, engine)
-    session.add_all([BusinessSubtype(cd_subtype=x[0], description=x[1]) for x in types])
-    session.commit()
