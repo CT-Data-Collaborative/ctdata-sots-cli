@@ -12,7 +12,7 @@ import click
 from .cleaner import cleaner
 from .prep import prep_release_files
 from .load.prep_db import connectDB, dropTables, buildStatusAndSubtypeTable, buildTables, loadData
-from .load.sots_models import create_engine
+# from .load.sots_models import create_engine
 
 @click.group()
 def main():
@@ -103,7 +103,7 @@ def loaddb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
 
     This will prepare the database, build tables, load data, build indices, and then cleanup
     """
-    engine = create_engine(dbuser, dbpass, dbhost, dbport)
+    pass
 
 
 
