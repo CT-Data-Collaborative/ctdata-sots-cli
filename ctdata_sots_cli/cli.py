@@ -75,7 +75,7 @@ def prepdb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
 
     This will prepare the database, build tables, load data, build indices, and then cleanup
     """
-    conn, cursor = connectDB(dbname, dbuser, dbpass, dbhost)
+    conn, cursor = connectDB(dbname, dbuser, dbpass, dbhost, dbport)
     dropTables(conn, cursor, schema)
     buildTables(conn, cursor, schema)
     buildStatusAndSubtypeTable(conn, cursor)
