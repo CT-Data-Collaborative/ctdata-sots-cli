@@ -153,16 +153,14 @@ def buildStatusAndSubtypeTable(conn, cursor):
 
     for query in q_list:
     # CREATE TABLE
-        if dry:
-            print(query[0])
+    else:
+        try:
+            print(query[1])
+            cursor.execute(query[0])
+        except Exception as e:
+            print(e)
+            conn.rollback();
         else:
-            try:
-                print(query[1])
-                cursor.execute(query[0])
-            except Exception as e:
-                print(e)
-                conn.rollback();
-            else:
-                # no errors!
-                conn.commit()
+            # no errors!
+            conn.commit()
 
