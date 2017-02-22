@@ -105,7 +105,8 @@ def loadData(conn, cursor, schemapath, datapath):
     with open(os.path.join(schemapath, 'structure.yml'), 'r') as f:
         structure = yaml.load(f.read())
     for table in structure['tables']:
-        table_file_name = "{}.csv".format(table)
+        table_name = table['name']
+        table_file_name = "{}.csv".format(table_name)
         file_path = os.path.join(datapath, table_file_name)
 
         SQL_STATEMENT = """
@@ -114,7 +115,7 @@ def loadData(conn, cursor, schemapath, datapath):
                 HEADER
                 DELIMITER AS ','
                 NULL as 'null'
-            """.format(table)
+            """.format(table_name)
 
         with open(file_path, 'rb') as file:
             try:
