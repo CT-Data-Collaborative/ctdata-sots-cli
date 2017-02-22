@@ -64,10 +64,12 @@ def unzip(zipdir):
               help='Password for database.')
 @click.option('--dbname', default='postgres',
               help='Name of database on host where data should be publish to.')
+@click.option('--dbport', default='5432',
+              help="Port to access db at.")
 @click.option('--data', type=click.Path(),
               help='Path to cleaned data')
 @click.argument('schema', type=click.Path(), default='.', required=False)
-def prepdb(dbhost, dbuser, dbpass, dbname, data, schema):
+def prepdb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
     """
     Publish SOTS data to the provided database
 
