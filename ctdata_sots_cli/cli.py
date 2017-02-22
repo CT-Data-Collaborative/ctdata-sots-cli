@@ -40,11 +40,9 @@ def clean(indir, outdir, schema, logdir):
     sots_cleaner.clean()
 
 @main.command()
-@click.option('--outdir', type=click.Path(),
-              help='Output directory where unzipped files should be written to.')
-@click.option('--indir', type=click.Path(),
+@click.option('--zipdir', type=click.Path(),
               help='Input directory where files from SOTS FTP server are stored.')
-def unzip(indir, outdir):
+def unzip(zipdir):
     """
     Unzip raw SOTS data to the target folder.
 
@@ -53,7 +51,7 @@ def unzip(indir, outdir):
     downloaded files and generates the correct directory structure as expected by the
     clean command.
     """
-    prep_release_files(indir)
+    prep_release_files(zipdir)
 
 
 @main.command()
@@ -79,3 +77,4 @@ def publish(dbhost, dbpass, dbname, data):
 
 if __name__ == '__main__':
     main()
+
