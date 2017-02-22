@@ -91,18 +91,15 @@ def buildTables(conn, cursor, schemapath):
         query = base_query.format(tableName=table["name"], queryParts=",\n\t".join(queryParts), tablePK=", ".join(tablePK))
 
         # CREATE TABLE
-        if dry:
-            print(query)
+        try:
+            print("Creating Table: "+table["name"])
+            cursor.execute(query)
+        except Exception as e:
+            print(e)
+            conn.rollback()
         else:
-            try:
-                print("Creating Table: "+table["name"])
-                cursor.execute(query)
-            except Exception as e:
-                print(e)
-                conn.rollback();
-            else:
-                # no errors!
-                conn.commit()
+            # no errors!
+            conn.commit()
 
 def buildStatusAndSubtypeTable(conn, cursor):
     q_list = []
