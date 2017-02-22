@@ -7,9 +7,10 @@ ctdata_sots_cli.cli
 Main `ctdata_sots_cli` CLI.
 """
 
-
 import click
 
+from .cleaner import cleaner
+from .prep import prep_release_files
 
 @click.group()
 def main():
@@ -22,8 +23,10 @@ def main():
               help='Output directory where cleaned files should be written to.')
 @click.option('--indir', type=click.Path(),
               help='Input directory where unzipped files are stored.')
+@click.option('--logdir', type=click.Path(), default='./log',
+              help='Directory where cleaning log files should be written')
 @click.argument('schema', type=click.Path(), default='.', required=False)
-def clean(indir, outdir, schema):
+def clean(indir, outdir, schema, logdir):
     """
     Parse unzipped raw SOTS data using the provided schema.
 
@@ -33,8 +36,8 @@ def clean(indir, outdir, schema):
 
     See <insert url for sots db schema> for more information about schema formatting.
     """
-    pass
-
+    sots_cleaner = cleaner(datapath=indir, outpath=outdir, schemapath=schema, logpath=logdir)
+    sots_cleaner.clean()
 
 @main.command()
 @click.option('--outdir', type=click.Path(),
@@ -50,7 +53,7 @@ def unzip(indir, outdir):
     downloaded files and generates the correct directory structure as expected by the
     clean command.
     """
-    pass
+    prep_release_files(indir)
 
 
 @main.command()
