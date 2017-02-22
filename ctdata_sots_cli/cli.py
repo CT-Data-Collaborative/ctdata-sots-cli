@@ -11,6 +11,7 @@ import click
 
 from .cleaner import cleaner
 from .prep import prep_release_files
+from .load import connectDB, dropTables, buildStatusAndSubtypeTable, buildTables
 
 @click.group()
 def main():
@@ -57,20 +58,26 @@ def unzip(zipdir):
 @main.command()
 @click.option('--dbhost', default='0.0.0.0',
               help='IP address of database server where data should be published to.')
+@click.option('--dbuser', default='postgres',
+              help='Database user.')
 @click.option('--dbpass', default='',
               help='Password for database.')
 @click.option('--dbname', default='postgres',
               help='Name of database on host where data should be publish to.')
 @click.option('--data', type=click.Path(),
               help='Path to cleaned data')
-def publish(dbhost, dbpass, dbname, data):
+@click.argument('schema', type=click.Path(), default='.', required=False)
+def prepdb(dbhost, dbuser, dbpass, dbname, data, schema):
     """
     Publish SOTS data to the provided database
 
     This will prepare the database, build tables, load data, build indices, and then cleanup
     """
-    pass
-
+    conn, cursor = connectDB(dbname, dbuser, dbpass, dbhost)
+    dropTables(conn, cursor, schema)
+    buildTables(conn, cursor, schema)
+    buildStatusAndSubtypeTable(conn, cursor)
+    conn.close()
 
 
 if __name__ == '__main__':
