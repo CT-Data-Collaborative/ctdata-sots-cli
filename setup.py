@@ -15,13 +15,14 @@ setup(
     author_email='scuerda@ctdata.org',
     license='MIT',
     version='0.1',
-    py_modules=['ctdata_sots_sli'],
+    py_modules=['ctdata_sots_cli'],
     install_requires=[
         'click>=6.7',
         'PyYaml==3.12',
         'SQLAlchemy==1.1.5',
         'psycopg2==2.6.2',
-        'python-dotenv==0.6.3'
+        'python-dotenv==0.6.3',
+        'unicodecsv==0.14.1'
         ],
     entry_points={
         'console_scripts': [
