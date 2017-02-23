@@ -386,6 +386,11 @@ def build_index(engine):
             ])
         )
 
+    click.echo("Prep cleanup")
+    cleanup_table_mat_views(engine)
+    cleanup_index_tables(engine)
+    cleanup_index_mat_view(engine)
+
     click.echo("Creating declared models")
     Base.metadata.create_all(engine)
 
