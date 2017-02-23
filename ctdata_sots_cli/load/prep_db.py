@@ -123,7 +123,7 @@ def loadData(conn, cursor, schemapath, datapath):
                 cursor.copy_expert(sql=SQL_STATEMENT, file=file)
                 # self._cursor.copy_from(file, table, sep=',')
                 conn.commit()
-                print("...success")
+                print("Loaded {} successfully.".format(table_name))
             except (DataError, IntegrityError) as e:
                 conn.rollback()
                 print(e)
@@ -170,7 +170,7 @@ def buildStatusAndSubtypeTable(conn, cursor):
         if i < len(status) - 1:
             row_query += ','
         status_data_query += row_query
-    q_list.append((status_data_query, 'Adding Status Data)'))
+    q_list.append((status_data_query, 'Adding Status Data'))
 
     subtype_data_query = """INSERT INTO business_subtype(cd_subtype, description) VALUES """
     for i, row in enumerate(types):
@@ -178,7 +178,7 @@ def buildStatusAndSubtypeTable(conn, cursor):
         if i < len(types) - 1:
             row_query += ','
         subtype_data_query += row_query
-    q_list.append((subtype_data_query, 'Adding Subtype Data)'))
+    q_list.append((subtype_data_query, 'Adding Subtype Data'))
 
     for query in q_list:
     # CREATE TABLE

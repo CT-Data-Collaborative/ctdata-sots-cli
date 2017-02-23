@@ -1,11 +1,15 @@
-from sqlalchemy import cast, text, Table, MetaData, Column, Integer, String, Float, Numeric, Date
-from sqlalchemy import Time, TIMESTAMP, Boolean, ForeignKey, create_engine, select, func, and_, DDL, Index
+import re
+from sqlalchemy import cast, Table, MetaData, Column, String, select, func, DDL
 from sqlalchemy.event import listen, listens_for
-from sqlalchemy.orm import mapper, relationship, sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.ext import compiler
 from sqlalchemy.schema import DDLElement
-import re
+
+# from sqlalchemy import cast, text, Table, MetaData, Column, Integer, String, Float, Numeric, Date
+# from sqlalchemy import Time, TIMESTAMP, Boolean, ForeignKey, select, func, and_, DDL, Index
+# from sqlalchemy.orm import mapper, relationship, sessionmaker, Session
+
+
 
 
 m_views = ['busmaster_mail_address_index', 'busmaster_name_index',
@@ -19,22 +23,13 @@ table_mat_views = ['bus_other_join_table', 'corp_join_table', 'dom_llc_join_tabl
 
 
 
-Base = declarative_base(engine)
 
-
-def create_engine(DB_USER, DB_PWD, DB_HOST, DB_PORT):
-    PG_URI = 'postgresql://{}:{}@{}:{}'.format(DB_USER, DB_PWD, DB_HOST, DB_PORT)
-    engine = create_engine(PG_URI, echo=True)
-    return engine
-
-
-
-def loadSession(Base, engine):
-    """"""
-    metadata = Base.metadata
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    return session
+# def loadSession(Base, engine):
+#     """"""
+#     metadata = Base.metadata
+#     Session = sessionmaker(bind=engine)
+#     session = Session()
+#     return session
 
 
 # --------------------------------------------------------------------------------------
@@ -222,6 +217,81 @@ def _final_cleanup(engine):
 
 
 def build_index(engine):
+    Base = declarative_base(engine)
+
+    class SOTSMixin(object):
+        @declared_attr
+        def __tablename__(cls):
+            return camel_to_underscore(cls.__name__)
+
+        __table_args__ = {'autoload': True}
+
+    class BusMaster(SOTSMixin, Base):
+        pass
+
+    class BusFiling(SOTSMixin, Base):
+        pass
+
+    class BusOther(SOTSMixin, Base):
+        pass
+
+    class Principal(SOTSMixin, Base):
+        pass
+
+    class GenPart(SOTSMixin, Base):
+        pass
+
+    class NameChange(SOTSMixin, Base):
+        pass
+
+    class Corp(SOTSMixin, Base):
+        pass
+
+    class DomLmtCmpy(SOTSMixin, Base):
+        pass
+
+    class DomLmtLiabPart(SOTSMixin, Base):
+        pass
+
+    class DomLmtPart(SOTSMixin, Base):
+        pass
+
+    class ForLmtCmpy(SOTSMixin, Base):
+        pass
+
+    class ForLmtLiabPart(SOTSMixin, Base):
+        pass
+
+    class ForLmtPart(SOTSMixin, Base):
+        pass
+
+    class ForStatTrust(SOTSMixin, Base):
+        pass
+
+    class BusinessStatus(Base):
+        __tablename__ = 'business_status'
+        cd_status = Column(String, primary_key=True)
+        description = Column(String)
+
+    class BusinessSubtype(Base):
+        __tablename__ = 'business_subtype'
+        cd_subtype = Column(String, primary_key=True)
+        description = Column(String)
+
+    class PrincipalNameIndex(Base):
+        __table__ = create_mat_view(
+            Base.metadata,
+            "principal_name_index",
+            select([
+                Principal.primary_id, Principal.id_bus,
+                cast('principal', String).label('table_name'),
+                cast('principal_name', String).label('index_name'),
+                cast('name', String).label('search_type'),
+                func.to_tsvector(Principal.nm_name).label('document')
+            ])
+        )
+
+
     _join_index_material_view(engine)
     _build_full_text_index_table(engine)
     _build_table_indices(engine)
@@ -229,90 +299,3 @@ def build_index(engine):
     _final_cleanup(engine)
 
 
-class SOTSMixin(object):
-    @declared_attr
-    def __tablename__(cls):
-        return camel_to_underscore(cls.__name__)
-
-    __table_args__ = {'autoload': True}
-
-
-class BusMaster(SOTSMixin, Base):
-    pass
-
-
-class BusFiling(SOTSMixin, Base):
-    pass
-
-
-class BusOther(SOTSMixin, Base):
-    pass
-
-
-class Principal(SOTSMixin, Base):
-    pass
-
-
-class GenPart(SOTSMixin, Base):
-    pass
-
-
-class NameChange(SOTSMixin, Base):
-    pass
-
-
-class Corp(SOTSMixin, Base):
-    pass
-
-
-class DomLmtCmpy(SOTSMixin, Base):
-    pass
-
-class DomLmtLiabPart(SOTSMixin, Base):
-    pass
-
-
-class DomLmtPart(SOTSMixin, Base):
-    pass
-
-
-class ForLmtCmpy(SOTSMixin, Base):
-    pass
-
-
-class ForLmtLiabPart(SOTSMixin, Base):
-    pass
-
-
-class ForLmtPart(SOTSMixin, Base):
-    pass
-
-
-class ForStatTrust(SOTSMixin, Base):
-    pass
-
-
-class BusinessStatus(Base):
-    __tablename__ = 'business_status'
-    cd_status = Column(String, primary_key=True)
-    description = Column(String)
-
-
-class BusinessSubtype(Base):
-    __tablename__ = 'business_subtype'
-    cd_subtype = Column(String, primary_key=True)
-    description = Column(String)
-
-
-class PrincipalNameIndex(Base):
-    __table__ = create_mat_view(
-        Base.metadata,
-        "principal_name_index",
-        select([
-            Principal.primary_id, Principal.id_bus,
-            cast('principal', String).label('table_name'),
-            cast('principal_name', String).label('index_name'),
-            cast('name', String).label('search_type'),
-            func.to_tsvector(Principal.nm_name).label('document')
-        ])
-    )
