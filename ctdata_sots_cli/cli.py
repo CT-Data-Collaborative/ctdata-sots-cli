@@ -12,7 +12,7 @@ import click
 from .cleaner import cleaner
 from .prep import prep_release_files
 from .load.prep_db import connectDB, dropTables, buildStatusAndSubtypeTable, buildTables, loadData
-from .load.helper import setup_engine
+from .load.helpers import setup_engine
 from .load.build_indices import build_index
 
 @click.group()
