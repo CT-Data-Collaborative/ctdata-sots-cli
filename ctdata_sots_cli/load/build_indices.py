@@ -291,6 +291,7 @@ def build_index(engine):
             ])
         )
 
+    Base.metadata.create_all(engine)
 
     _join_index_material_view(engine)
     _build_full_text_index_table(engine)
