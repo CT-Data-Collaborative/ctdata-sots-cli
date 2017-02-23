@@ -104,10 +104,9 @@ def loaddb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
 
     This will prepare the database, build tables, load data, build indices, and then cleanup
     """
-    setup_engine(DB_USER, DB_PWD, DB_HOST, DB_PORT):
+    setup_engine(DB_USER, DB_PWD, DB_HOST, DB_PORT)
     engine = setup_engine(dbuser, dbpass, dbhost, dbport, dbname)
     build_index(engine)
-
 
 
 
