@@ -4,7 +4,7 @@ from sqlalchemy.event import listen, listens_for
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.ext import compiler
 from sqlalchemy.schema import DDLElement
-
+import click
 # from sqlalchemy import cast, text, Table, MetaData, Column, Integer, String, Float, Numeric, Date
 # from sqlalchemy import Time, TIMESTAMP, Boolean, ForeignKey, select, func, and_, DDL, Index
 # from sqlalchemy.orm import mapper, relationship, sessionmaker, Session
@@ -291,12 +291,115 @@ def build_index(engine):
             ])
         )
 
+    class BusMasterMailAddressIndex(Base):
+        __table__ = create_mat_view(
+            Base.metadata,
+            'busmaster_mail_address_index',
+            select([
+                BusMaster.primary_id, BusMaster.id_bus,
+                cast('bus_master', String).label('table_name'),
+                cast('business_mail_address', String).label('index_name'),
+                cast('address', String).label('search_type'),
+                func.to_tsvector(
+                    func.CONCAT_WS(' ', BusMaster.ad_mail_str1, BusMaster.ad_mail_str2, BusMaster.ad_mail_str3,
+                                   BusMaster.ad_mail_city, BusMaster.ad_mail_st,
+                                   BusMaster.ad_mail_zip5, BusMaster.ad_mail_cntry)).label('document')
+            ])
+        )
+
+    class BusMasterPlaceaOfBusinessAddressIndex(Base):
+        __table__ = create_mat_view(
+            Base.metadata,
+            'busmaster_place_of_business_address_index',
+            select([
+                BusMaster.primary_id, BusMaster.id_bus,
+                cast('bus_master', String).label('table_name'),
+                cast('place_of_business_address', String).label('index_name'),
+                cast('address', String).label('search_type'),
+                func.to_tsvector(func.CONCAT_WS(' ', BusMaster.ad_str1, BusMaster.ad_str2, BusMaster.ad_str3,
+                                                BusMaster.ad_city, BusMaster.ad_st,
+                                                BusMaster.ad_zip5, BusMaster.ad_cntry)).label('document')
+            ])
+        )
+
+    # --------------------------------------------------------------------------------------
+    # Business Name
+    # --------------------------------------------------------------------------------------
+    class BusMasterNameIndex(Base):
+        __table__ = create_mat_view(
+            Base.metadata,
+            'busmaster_name_index',
+            select([
+                BusMaster.primary_id, BusMaster.id_bus,
+                cast('bus_master', String).label('table_name'),
+                cast('business_name', String).label('index_name'),
+                cast('name', String).label('search_type'),
+                func.to_tsvector(BusMaster.nm_name).label('document')
+            ])
+        )
+
+    # --------------------------------------------------------------------------------------
+    # Old Business Name
+    # --------------------------------------------------------------------------------------
+    class NameChangeOldNameIndex(Base):
+        __table__ = create_mat_view(
+            Base.metadata,
+            'name_change_oldname_index',
+            select([
+                NameChange.primary_id, NameChange.id_bus,
+                cast('name_change', String).label('table_name'),
+                cast('name_change_oldname', String).label('index_name'),
+                cast('name', String).label('search_type'),
+                func.to_tsvector(NameChange.nm_old).label('document')
+            ])
+        )
+
+    # --------------------------------------------------------------------------------------
+    # Business Filing Number
+    # --------------------------------------------------------------------------------------
+    class FilingNumberIndex(Base):
+        __table__ = create_mat_view(
+            Base.metadata,
+            'filing_number_index',
+            select([
+                BusFiling.primary_id, BusFiling.id_bus,
+                cast('bus_filing', String).label('table_name'),
+                cast('filing_number', String).label('index_name'),
+                cast('filing_number', String).label('search_type'),
+                func.to_tsvector(BusFiling.id_bus_flng).label('document')
+            ])
+        )
+
+    # --------------------------------------------------------------------------------------
+    # Business ID
+    # --------------------------------------------------------------------------------------
+    class BusIDIndex(Base):
+        __table__ = create_mat_view(
+            Base.metadata,
+            'bus_id_index',
+            select([
+                BusMaster.primary_id, BusMaster.id_bus,
+                cast('bus_master', String).label('table_name'),
+                cast('bus_id', String).label('index_name'),
+                cast('bus_id', String).label('search_type'),
+                func.to_tsvector(BusMaster.id_bus).label('document')
+            ])
+        )
+
+    click.echo("Creating declared models")
     Base.metadata.create_all(engine)
 
+    click.echo("Joining Material Views")
     _join_index_material_view(engine)
+
+    click.echo("Building Full Text Index")
     _build_full_text_index_table(engine)
+
+    click.echo("Adding table column indices")
     _build_table_indices(engine)
     _bus_filing_index(engine)
+
+    click.echo("Cleaning up")
     _final_cleanup(engine)
 
 
