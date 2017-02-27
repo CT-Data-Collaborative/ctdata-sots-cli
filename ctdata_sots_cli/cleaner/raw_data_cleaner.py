@@ -1,11 +1,12 @@
 from os import walk, path
+from datetime import datetime, time
 import yaml
 from collections import namedtuple
 import codecs
 import unicodecsv as ucsv
 import json
 from uuid import uuid4
-
+import click
 
 def toChar(string):
     val = string.rstrip(' \t\r\n\0').lstrip(' \t\r\n\0')
@@ -111,7 +112,7 @@ class cleaner(object):
 
     def loadSchema(self):
         """Helper function for loading schema files as defined by script variables."""
-        print("...loading schema")
+        click.echo("...loading schema")
         structureFile = open(path.join(self.schemapath, "structure.yml"), "r")
         self.structure = yaml.load(structureFile.read())
 
