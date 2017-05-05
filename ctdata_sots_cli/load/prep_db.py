@@ -2,11 +2,14 @@ import os
 import yaml
 from psycopg2 import connect, DataError, IntegrityError
 
+from ctdata_sots_cli.data import tx_codes, fips
+
 def connectDB(db, user, pwd, host, port):
     """Opens a psycopg2 db connction using configuration parems set in self.scriptVars."""
     conn = connect(database=db, user=user, password=pwd, host=host, port=port)
     cursor = conn.cursor()
     return conn, cursor
+
 
 def dropTables(conn, cursor, schemapath):
     """Drop all tables as specified in schema."""
@@ -37,6 +40,7 @@ def dropTables(conn, cursor, schemapath):
             # no errors!
             conn.commit()
 
+
 def buildTables(conn, cursor, schemapath):
     """Read schema files and build tables.
 
@@ -47,7 +51,6 @@ def buildTables(conn, cursor, schemapath):
 
     with open(os.path.join(schemapath, 'structure.yml'), 'r') as f:
         structure = yaml.load(f.read())
-
 
     for table in structure["tables"]:
         # GENERATE QUERY
@@ -62,7 +65,7 @@ def buildTables(conn, cursor, schemapath):
 
             ## Use supplied types.
             if field["type"] == "char":
-                fieldType += "("+str(field["length"])+")"
+                fieldType += "(" + str(field["length"]) + ")"
 
             if field["pk"]:
                 tablePK.extend([field["name"]])
@@ -70,12 +73,11 @@ def buildTables(conn, cursor, schemapath):
             fieldFK = ""
 
             if field["fk"]:
-                fieldFK = "references "+str(field["fk"])
+                fieldFK = "references " + str(field["fk"])
 
             fieldDef = " ".join([field["name"], fieldType, fieldFK]).strip()
             queryParts.extend([fieldDef])
         queryParts.extend(['PRIMARY_ID UUID'])
-
 
         base_query = """CREATE TABLE IF NOT EXISTS {tableName} (
         {queryParts},
@@ -86,13 +88,14 @@ def buildTables(conn, cursor, schemapath):
         # elif table['name'] == 'BUS_FILING':
         #     base_query += ", UNIQUE (ID_BUS_FLNG));"
         else:
-            base_query +=  ");"
+            base_query += ");"
 
-        query = base_query.format(tableName=table["name"], queryParts=",\n\t".join(queryParts), tablePK=", ".join(tablePK))
+        query = base_query.format(tableName=table["name"], queryParts=",\n\t".join(queryParts),
+                                  tablePK=", ".join(tablePK))
 
         # CREATE TABLE
         try:
-            print("Creating Table: "+table["name"])
+            print("Creating Table: " + table["name"])
             cursor.execute(query)
         except Exception as e:
             print(e)
@@ -100,6 +103,7 @@ def buildTables(conn, cursor, schemapath):
         else:
             # no errors!
             conn.commit()
+
 
 def loadData(conn, cursor, schemapath, datapath):
     with open(os.path.join(schemapath, 'structure.yml'), 'r') as f:
@@ -130,6 +134,7 @@ def loadData(conn, cursor, schemapath, datapath):
                 print(e.pgcode)
                 print("...rolling back")
 
+
 def buildStatusAndSubtypeTable(conn, cursor):
     q_list = []
     status = [('AC', 'Active'), ('CN', 'Cancelled'), ('CS', 'Consolidation'), ('CV', 'Converted'),
@@ -151,6 +156,7 @@ def buildStatusAndSubtypeTable(conn, cursor):
              ('W', 'Domestic Bank Stock'), ('X', 'Domestic Bank Non-Stock'), ('Y', 'Domestic Insurance Stock'),
              ('Z', 'Domestic Insurance Non-Stock'), ('B', 'Benefit Corporation')]
 
+
     status_table_query = """CREATE TABLE IF NOT EXISTS business_status (
         cd_status character varying PRIMARY KEY,
         description character varying);"""
@@ -163,6 +169,26 @@ def buildStatusAndSubtypeTable(conn, cursor):
 
     q_list.append((subtype_table_query, 'Creating Table: Business Subtype'))
 
+    tx_codes_table_query = """CREATE TABLE IF NOT EXISTS tx_codes (
+        cd_trans_type character varying PRIMARY KEY,
+        label character varying,
+        stock character varying,
+        nonstock character varying,
+        domestic character varying,
+        foreign character varying,
+        benefit character varying,
+        type character varying);"""
+
+    q_list.append((tx_codes_table_query, 'Creating Table: Transaction Codes'))
+
+    fips_table_query = """CREATE TABLE IF NOT EXISTS fips (
+        town character varying PRIMARY KEY,
+        fips character varying,
+        county_fips character varying,
+        county character varying,
+        subtown character varying);"""
+
+    q.list.append((fips_table_query, 'Creating Table: FIPS'))
 
     status_data_query = """INSERT INTO business_status(cd_status, description) VALUES """
     for i, row in enumerate(status):
@@ -180,8 +206,28 @@ def buildStatusAndSubtypeTable(conn, cursor):
         subtype_data_query += row_query
     q_list.append((subtype_data_query, 'Adding Subtype Data'))
 
+    tx_code_data_query = """INSERT INTO tx_codes(cd_trans_type, label, stock. nonstock, domestic, foreign, beneift, type) VALUES """
+    for i, row in enumerate(tx_codes):
+        row_query = "('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(row['cd_trans_type'], row['label'],
+                                                                              row['stock'], row['nonstock'],
+                                                                              row['domestic'],row['foreign'],
+                                                                              row['benefit'], row['type'])
+        if i < len(types) - 1:
+            row_query += ','
+        tx_code_data_query += row_query
+    q_list.append((tx_codes_table_query, 'Adding Transaction Codes'))
+
+    fips_code_data_query = """INSERT INTO fips(town, fips, county_fips, county, subtown) VALUES"""
+    for i, row in enumerate(fips):
+        row_query = "('{}', '{}', '{}', '{}', '{}', '{}')".format(row['town'], row['fips'], row['county_fips'],
+                                                                  row['county'], row['subtown'])
+        if i < len(types) - 1:
+            row_query += ','
+        fips_code_data_query += row_query
+    q_list.append((fips_code_data_query, 'Adding FIPS Data'))
+
     for query in q_list:
-    # CREATE TABLE
+        # CREATE TABLE
         try:
             print(query[1])
             cursor.execute(query[0])
@@ -191,4 +237,3 @@ def buildStatusAndSubtypeTable(conn, cursor):
         else:
             # no errors!
             conn.commit()
-
