@@ -122,7 +122,8 @@ def loaddb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
 @click.option('--output', '-o', type=click.Path(),
               help='Output file to save results to')
 def extract_formations(dbhost, dbuser, dbpass, dbname, dbport, output):
-    extract(dbhost, dbuser, dbpass, dbname, dbport, output)
+    """Extract CT business formation data"""
+    extract(dbname, dbuser, dbpass, dbhost, dbport, output)
 
 if __name__ == '__main__':
     main()
