@@ -30,3 +30,6 @@ Configuration and Use
 
      $ sots --dbbame postgres --host 52.123.44.23
 
+
+
+sots clean --indir /Users/scuerda/Work/Projects/_SOTS/monthlies/3_2_2017  --outdir /Users/scuerda/Work/Projects/_SOTS/sots_db_container/data/clean/v9  --logdir/Users/scuerda/Work/Projects/_SOTS/sots_db_container/log/v9
