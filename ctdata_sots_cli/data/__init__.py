@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 tx_codes = [OrderedDict([('cd_trans_type', 'ACAS'),
                          ('label', 'AGENT ADDRESS CHANGE FOR STOCK CORPORATIONS (DOMESTIC, BENEFIT & FOREIGN)'),
                          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign', 'TRUE'),
