@@ -188,7 +188,7 @@ def buildStatusAndSubtypeTable(conn, cursor):
         county character varying,
         subtown character varying);"""
 
-    q.list.append((fips_table_query, 'Creating Table: FIPS'))
+    q_list.append((fips_table_query, 'Creating Table: FIPS'))
 
     status_data_query = """INSERT INTO business_status(cd_status, description) VALUES """
     for i, row in enumerate(status):

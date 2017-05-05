@@ -80,8 +80,23 @@ def prepdb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
     dropTables(conn, cursor, schema)
     buildTables(conn, cursor, schema)
     loadData(conn, cursor, schema, data)
-    buildStatusAndSubtypeTable(conn, cursor)
     conn.close()
+
+@main.command()
+@click.option('--dbhost', default='0.0.0.0',
+              help='IP address of database server where data should be published to.')
+@click.option('--dbuser', default='postgres',
+              help='Database user.')
+@click.option('--dbpass', default='',
+              help='Password for database.')
+@click.option('--dbname', default='postgres',
+              help='Name of database on host where data should be publish to.')
+@click.option('--dbport', default='5432',
+              help="Port to access db at.")
+def add_supplemental(dbhost, dbuser, dbpass, dbname, dbport):
+    conn, cursor = connectDB(dbname, dbuser, dbpass, dbhost, dbport)
+    buildStatusAndSubtypeTable(conn, cursor)
+
 
 @main.command()
 @click.option('--dbhost', default='0.0.0.0',
