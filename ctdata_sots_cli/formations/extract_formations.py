@@ -20,7 +20,7 @@ EXTRACT_FORMATIONS_QUERY = """
          ELSE ''
         END as stock,
         CASE WHEN tx.domestic = 'TRUE' then 'D'
-         WHEN tx.foreign = 'TRUE' then 'F'
+         WHEN tx.foreign_company = 'TRUE' then 'F'
          ELSE ''
         END as domestic
     FROM
