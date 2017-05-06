@@ -220,7 +220,7 @@ def build_supplemental_tables(conn, cursor):
         subtype_data_query += row_query
     q_list.append((subtype_data_query, 'Adding Subtype Data'))
 
-    tx_code_data_query = """INSERT INTO tx_codes(cd_trans_type, label, stock. nonstock, domestic, foreign_company, benefit, company_type) VALUES """
+    tx_code_data_query = """INSERT INTO tx_codes(cd_trans_type, label, stock, nonstock, domestic, foreign_company, benefit, company_type) VALUES """
     for i, row in enumerate(tx_codes):
         row_query = "('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(row['cd_trans_type'], row['label'],
                                                                               row['stock'], row['nonstock'],
@@ -229,7 +229,6 @@ def build_supplemental_tables(conn, cursor):
         if i < len(tx_codes) - 1:
             row_query += ','
         tx_code_data_query += row_query
-    click.echo(tx_code_data_query)
     q_list.append((tx_code_data_query, 'Adding Transaction Codes'))
 
     fips_code_data_query = """INSERT INTO fips(town, fips, county_fips, county, subtown) VALUES"""
