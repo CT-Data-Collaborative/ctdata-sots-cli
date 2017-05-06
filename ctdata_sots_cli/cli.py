@@ -12,7 +12,7 @@ import click
 from .cleaner import cleaner
 from .formations import extract
 from .prep import prep_release_files
-from .load.prep_db import connect_db, drop_tables, build_supplemental, drop_supplemental, build_tables, load_data
+from .load.prep_db import connect_db, drop_tables, build_supplemental_tables, drop_supplemental_tables, build_tables, load_data
 from .load.helpers import setup_engine
 from .load.build_indices import build_index
 
@@ -95,7 +95,7 @@ def prepdb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
               help="Port to access db at.")
 def add_supplemental(dbhost, dbuser, dbpass, dbname, dbport):
     conn, cursor = connect_db(dbname, dbuser, dbpass, dbhost, dbport)
-    build_supplemental(conn, cursor)
+    build_supplemental_tables(conn, cursor)
 
 
 @main.command()
@@ -111,7 +111,7 @@ def add_supplemental(dbhost, dbuser, dbpass, dbname, dbport):
               help="Port to access db at.")
 def drop_supplemental(dbhost, dbuser, dbpass, dbname, dbport):
     conn, cursor = connect_db(dbname, dbuser, dbpass, dbhost, dbport)
-    drop_supplemental(conn, cursor)
+    drop_supplemental_tables(conn, cursor)
 
 
 @main.command()

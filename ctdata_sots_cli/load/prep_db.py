@@ -133,23 +133,22 @@ def load_data(conn, cursor, schemapath, datapath):
                 print("...rolling back")
 
 
-def drop_supplemental(conn, cursor):
-    click.echo("drop supplemental called")
-    # for table in ['business_subtype', 'business_status', 'tx_codes', 'fips']:
-    #     query = """DROP TABLE IF EXISTS {} CASCADE;""".format(table)
-    #     click.echo(query)
-        # try:
-        #     print("Dropping Table: " + table)
-        #     cursor.execute(query)
-        # except Exception as e:
-        #     print(e)
-        #     conn.rollback()
-        # else:
-        #     # no errors!
-        #     conn.commit()
+def drop_supplemental_tables(conn, cursor):
+
+    for table in ['business_subtype', 'business_status', 'tx_codes', 'fips']:
+        query = """DROP TABLE IF EXISTS {} CASCADE;""".format(table)
+        try:
+            click.echo("Dropping Table: " + table)
+            cursor.execute(query)
+        except Exception as e:
+            click.echo(e)
+            conn.rollback()
+        else:
+            # no errors!
+            conn.commit()
 
 
-def build_supplemental(conn, cursor):
+def build_supplemental_tables(conn, cursor):
     q_list = []
     status = [('AC', 'Active'), ('CN', 'Cancelled'), ('CS', 'Consolidation'), ('CV', 'Converted'),
               ('D', 'Dissolved'),
