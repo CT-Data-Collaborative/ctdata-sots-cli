@@ -3,207 +3,207 @@ from collections import OrderedDict
 tx_codes = [OrderedDict([('cd_trans_type', 'ACAS'),
                          ('label', 'AGENT ADDRESS CHANGE FOR STOCK CORPORATIONS (DOMESTIC, BENEFIT & FOREIGN)'),
                          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'),
-                         ('benefit', 'TRUE'), ('type', 'CORP')]), OrderedDict(
+                         ('benefit', 'TRUE'), ('company_type', 'CORP')]), OrderedDict(
     [('cd_trans_type', 'ACS'), ('label', 'AGENT CHANGE FOR STOCK CORPORATIONS (DOMESTIC,BENEFIT & FOREIGN)'),
      ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'TRUE'),
-     ('type', 'CORP')]), OrderedDict(
+     ('company_type', 'CORP')]), OrderedDict(
     [('cd_trans_type', 'CINC'), ('label', 'INTERIM NOTICE FOR CORPORATIONS (DOMESTIC, BENEFIT & FOREIGN)'),
      ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'TRUE'),
-     ('type', 'CORP')]), OrderedDict(
+     ('company_type', 'CORP')]), OrderedDict(
     [('cd_trans_type', 'COB'), ('label', 'ORGANIZATION AND FIRST REPORT FOR BENEFIT CORPORATION'),
      ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'TRUE'),
-     ('type', 'BEN')]), OrderedDict(
+     ('company_type', 'BEN')]), OrderedDict(
     [('cd_trans_type', 'CRS'), ('label', 'ANNUAL REPORT FOR STOCK CORPORATION (DOMESTIC & BENEFIT)'),
      ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'TRUE'),
-     ('type', 'CORP')]), OrderedDict(
+     ('company_type', 'CORP')]), OrderedDict(
     [('cd_trans_type', 'ACAN'), ('label', 'AGENT ADDRESS CHANGE FOR NON-STOCK CORPORATIONS (DOMESTIC & FOREIGN)'),
      ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-     ('type', 'CORP')]), OrderedDict(
+     ('company_type', 'CORP')]), OrderedDict(
     [('cd_trans_type', 'ACN'), ('label', 'AGENT CHANGE FOR NON-STOCK CORPORATIONS (DOMESTIC & FOREIGN)'),
      ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-     ('type', 'CORP')]), OrderedDict(
+     ('company_type', 'CORP')]), OrderedDict(
     [('cd_trans_type', 'ASRN'), ('label', 'RESIGNATION OF AGENT FOR NON-STOCK CORPORATIONS (DOMESTIC & FOREIGN)'),
      ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-     ('type', 'CORP')]), OrderedDict(
+     ('company_type', 'CORP')]), OrderedDict(
     [('cd_trans_type', 'ASRS'), ('label', 'RESIGNATION OF AGENT FOR STOCK CORPORATIONS (DOMESTIC & FOREIGN)'),
      ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-     ('type', 'CORP')]), OrderedDict(
+     ('company_type', 'CORP')]), OrderedDict(
     [('cd_trans_type', 'BAN'), ('label', 'BUSINESS AMENDMENT FOR BANK (NON-STOCK)'), ('stock', 'FALSE'),
-     ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', 'BANK')]),
+     ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', 'BANK')]),
             OrderedDict(
                 [('cd_trans_type', 'BAS'), ('label', 'BUSINESS AMENDMENT FOR BANK (STOCK)'), ('stock', 'TRUE'),
                  ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-                 ('type', 'BANK')]), OrderedDict(
+                 ('company_type', 'BANK')]), OrderedDict(
         [('cd_trans_type', 'BCORP'), ('label', 'BUSINESS FORMATION FOR BENEFIT CORPORATION'), ('stock', 'FALSE'),
          ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'BEN')]), OrderedDict(
+         ('company_type', 'BEN')]), OrderedDict(
         [('cd_trans_type', 'BN'), ('label', 'BUSINESS FORMATION FOR DOMESTIC BANK (NON-STOCK)'), ('stock', 'FALSE'),
-         ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', 'BANK')]),
+         ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', 'BANK')]),
             OrderedDict([('cd_trans_type', 'BS'), ('label', 'BUSINESS FORMATION FOR DOMESTIC BANK (STOCK)'),
                          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-                         ('benefit', 'FALSE'), ('type', 'BANK')]), OrderedDict(
+                         ('benefit', 'FALSE'), ('company_type', 'BANK')]), OrderedDict(
         [('cd_trans_type', 'CAFN'), ('label', 'BUSINESS AMENDMENT FOR NON-STOCK CORPORATION (FOREIGN) '),
          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CAFS'), ('label', 'BUSINESS AMENDMENT FOR STOCK CORPORATION (FOREIGN) '),
          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CAN'), ('label', 'BUSINESS AMENDMENT FOR NON-STOCK CORPORATION (DOMESTIC) '),
          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CAS'), ('label', 'BUSINESS AMENDMENT FOR STOCK CORPORATION (DOMESTIC) '),
          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CASCN'), ('label', 'BUSINESS AMENDMENT FOR NON-STOCK CORPORATION (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CASCS'), ('label', 'BUSINESS AMENDMENT FOR STOCK CORPORATION (FOREIGN) '),
          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict([('cd_trans_type', 'CCORMS'), (
+         ('company_type', 'CORP')]), OrderedDict([('cd_trans_type', 'CCORMS'), (
         'label', 'CERTIFICATE OF CORRECTION IN MERGER FOR STOCK CORPORATIONS (DOMESTIC & FOREIGN)'), ('stock', 'TRUE'),
                                           ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'),
-                                          ('benefit', 'FALSE'), ('type', 'CORP')]), OrderedDict(
+                                          ('benefit', 'FALSE'), ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CCORN'),
          ('label', 'CERTIFICATE OF CORRECTION FOR NON-STOCK CORPORATIONS (DOMESTIC & FOREIGN)'), ('stock', 'FALSE'),
-         ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'), ('type', 'CORP')]),
+         ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'), ('company_type', 'CORP')]),
             OrderedDict([('cd_trans_type', 'CDRN'), ('label', 'DISSOLUTION FOR NON-STOCK CORPORATION (DOMESTIC)'),
                          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-                         ('benefit', 'FALSE'), ('type', 'CORP')]), OrderedDict(
+                         ('benefit', 'FALSE'), ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CDRNNR'), ('label', 'DISSOLUTION FOR RELIGIOUS (NON-STOCK)'), ('stock', 'FALSE'),
-         ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', 'REL')]),
+         ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', 'REL')]),
             OrderedDict([('cd_trans_type', 'CDRS'), ('label', 'DISSOLUTION FOR STOCK CORPORATION (DOMESTIC)'),
                          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-                         ('benefit', 'FALSE'), ('type', 'CORP')]), OrderedDict(
+                         ('benefit', 'FALSE'), ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CDRSNR'), ('label', 'DISSOLUTION FOR RELIGIOUS (STOCK)'), ('stock', 'TRUE'),
          ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'REL')]), OrderedDict(
+         ('company_type', 'REL')]), OrderedDict(
         [('cd_trans_type', 'CFAN'), ('label', 'BUSINESS FORMATION FOR NON-STOCK CORPORATION (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CFAS'), ('label', 'BUSINESS FORMATION FOR STOCK CORPORATION (FOREIGN)`'),
          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict([('cd_trans_type', 'CFNR'), (
+         ('company_type', 'CORP')]), OrderedDict([('cd_trans_type', 'CFNR'), (
         'label', 'REGISTRATION OF CORPORATE NAME FOR FOREIGN CORPORATIONS (STOCK & NON-STOCK)'), ('stock', 'TRUE'),
                                           ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-                                          ('benefit', 'FALSE'), ('type', 'CORP')]), OrderedDict(
+                                          ('benefit', 'FALSE'), ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CFNRR'),
          ('label', 'RENEWAL OF REGISTRATION OF CORPORATE NAME FOR FOREIGN CORPORATIONS (STOCK & NON-STOCK)'),
          ('stock', 'TRUE'), ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict([('cd_trans_type', 'CFRIS'), (
+         ('company_type', 'CORP')]), OrderedDict([('cd_trans_type', 'CFRIS'), (
         'label', 'CERTIFICATE OF RE-DOMESTICATION FOR STOCK INSURANCE CHANGE FROM FOREIGN TO DOMESTIC'),
                                           ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'),
-                                          ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', 'INS')]),
+                                          ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', 'INS')]),
             OrderedDict([('cd_trans_type', 'CFRN'), ('label', 'ANNUAL REPORT FOR FOREIGN NON-STOCK CORPORATION'),
                          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-                         ('benefit', 'FALSE'), ('type', 'CORP')]), OrderedDict([('cd_trans_type', 'CFRO'), (
+                         ('benefit', 'FALSE'), ('company_type', 'CORP')]), OrderedDict([('cd_trans_type', 'CFRO'), (
         'label', 'CERTIFICATE OF RE-DOMESTICATION FOR STOCK INSURANCE CHANGE FROM DOMESTIC TO FOREIGN'),
                                                                                 ('stock', 'TRUE'),
                                                                                 ('nonstock', 'FALSE'),
                                                                                 ('domestic', 'FALSE'),
                                                                                 ('foreign_company', 'TRUE'),
                                                                                 ('benefit', 'FALSE'),
-                                                                                ('type', 'INS')]), OrderedDict(
+                                                                                ('company_type', 'INS')]), OrderedDict(
         [('cd_trans_type', 'CFRS'), ('label', 'ANNUAL REPORT FOR FOREIGN STOCK CORPORATION'), ('stock', 'TRUE'),
          ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CFRSX'), ('label', 'CORRECTED REPORT FOR FOREIGN STOCK CORPORATION '),
          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CFWN'), ('label', 'WITHDRAWAL FOR NON-STOCK CORPORATION (FOREIGN) '),
          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CFWS'), ('label', 'WITHDRAWAL FOR STOCK CORPORATION (FOREIGN) '), ('stock', 'TRUE'),
          ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CICUN'), ('label', 'BUSINESS FORMATION FOR DOMESTIC CREDIT UNION (NON-STOCK)'),
          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CU')]), OrderedDict(
+         ('company_type', 'CU')]), OrderedDict(
         [('cd_trans_type', 'CIN'), ('label', 'BUSINESS FORMATION FOR NON-STOCK CORPORATION (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CIS'), ('label', 'BUSINESS FORMATION FOR STOCK CORPORATION (DOMESTIC)'),
          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict([('cd_trans_type', 'COCN'), (
+         ('company_type', 'CORP')]), OrderedDict([('cd_trans_type', 'COCN'), (
         'label', 'CORRECTED ORGANIZATION AND FIRST REPORT FOR DOMESTIC NON-STOCK CORPORATION'), ('stock', 'FALSE'),
                                           ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-                                          ('benefit', 'FALSE'), ('type', 'CORP')]), OrderedDict(
+                                          ('benefit', 'FALSE'), ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'COCS'),
          ('label', 'CORRECTED ORGANIZATION AND FIRST REPORT FOR DOMESTIC STOCK CORPORATION'), ('stock', 'TRUE'),
          ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CON'), ('label', 'ORGANIZATION AND FIRST REPORT FOR NON-STOCK CORPORATION (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'COS'), ('label', 'ORGANIZATION AND FIRST REPORT FOR STOCK CORPORATION (DOMESTIC)'),
          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CRCA'), ('label', 'BUSINESS AMENDMENT FOR RELIGIOUS (NON-STOCK)'), ('stock', 'FALSE'),
-         ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', 'REL')]),
+         ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', 'REL')]),
             OrderedDict([('cd_trans_type', 'CRDN'),
                          ('label', 'REVOCATION OF DISSOLUTION  FOR NON-STOCK CORPORATION (DOMESTIC)'),
                          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-                         ('benefit', 'FALSE'), ('type', 'CORP')]), OrderedDict(
+                         ('benefit', 'FALSE'), ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CRDS'), ('label', 'REVOCATION OF DISSOLUTION  FOR STOCK CORPORATION (DOMESTIC)'),
          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CRLC'), ('label', 'ANNUAL REPORT FOR LIMITED LIABILITY COMPANY (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'CRLCF'), ('label', 'ANNUAL REPORT FOR LIMITED LIABILITY COMPANY (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'CRLLP'), ('label', 'ANNUAL REPORT FOR LIMITED LIABILITY PARTNERSHIP (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLP')]), OrderedDict(
         [('cd_trans_type', 'CRLLPF'), ('label', 'ANNUAL REPORT FOR LIMITED LIABILITY PARTNERSHIP (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LLP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLP')]), OrderedDict(
         [('cd_trans_type', 'CRLP'), ('label', 'ANNUAL REPORT FOR LIMITED PARTNERSHIP (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'CRLPF'), ('label', 'ANNUAL REPORT FOR LIMITED PARTNERSHIP (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'CRN'), ('label', 'ANNUAL REPORT FOR NON-STOCK CORPORATION (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CRNX'), ('label', 'CORRECTED REPORT FOR DOMESTIC NON-STOCK CORPORATION'),
          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict(
+         ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CRSX'), ('label', 'CORRECTED REPORT FOR DOMESTIC STOCK CORPORATION '),
          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict([('cd_trans_type', 'CSCSS'), (
+         ('company_type', 'CORP')]), OrderedDict([('cd_trans_type', 'CSCSS'), (
         'label', 'CERTIFICATE OF SURRENDER FOR OTHER STOCK CORPORATIONS (CREDIT UNION)'), ('stock', 'TRUE'),
                                           ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'),
-                                          ('benefit', 'FALSE'), ('type', 'CU')]), OrderedDict(
+                                          ('benefit', 'FALSE'), ('company_type', 'CU')]), OrderedDict(
         [('cd_trans_type', 'CUAN'),
          ('label', 'CERTIFICATE OF AMENDMENT FOR OTHER NON STOCK CORPORATION (CREDIT UNION)'), ('stock', 'FALSE'),
-         ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', 'CU')]),
+         ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', 'CU')]),
             OrderedDict([('cd_trans_type', 'CZLC'),
                          ('label', 'CERTIFICATE OF REINSTATEMENT FOR LIMITED LIABILITY COMPANY (DOMESTIC)'),
                          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-                         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict([('cd_trans_type', 'CZLCN'), (
+                         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict([('cd_trans_type', 'CZLCN'), (
         'label', 'CERTIFICATE OF REINSTATEMENT FOR DOMESTIC LIMITED LIABILITY COMPANY WITH NAME CHANGE '),
                                                                                ('stock', 'FALSE'),
                                                                                ('nonstock', 'FALSE'),
                                                                                ('domestic', 'TRUE'),
                                                                                ('foreign_company', 'FALSE'),
                                                                                ('benefit', 'FALSE'),
-                                                                               ('type', 'LLC')]), OrderedDict(
+                                                                               ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'CZLP'),
          ('label', 'CERTIFICATE OF REINSTATEMENT FOR DOMESTIC LIMITED PARTNERSHIP WITHOUT NAME CHANGE '),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'CZN'), ('label', 'CERTIFICATE OF REINSTATEMENT FOR NON-STOCK CORPORATION (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict([('cd_trans_type', 'CZNN'), (
+         ('company_type', 'CORP')]), OrderedDict([('cd_trans_type', 'CZNN'), (
         'label', 'CERTIFICATE OF REINSTATEMENT FOR DOMESTIC NON-STOCK CORPORATION WITH NAME CHANGE '),
                                           ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'),
-                                          ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', 'CORP')]),
+                                          ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', 'CORP')]),
             OrderedDict([('cd_trans_type', 'CZNPO'), ('label',
                                                       'CERTIFICATE OF REINSTATEMENT FOR DOMESTIC NON-STOCK AND FIRST ORGANIZATION & REPORT WITHOUT NAME CHANGE '),
                          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-                         ('benefit', 'FALSE'), ('type', 'CORP')]), OrderedDict([('cd_trans_type', 'CZNPON'), (
+                         ('benefit', 'FALSE'), ('company_type', 'CORP')]), OrderedDict([('cd_trans_type', 'CZNPON'), (
         'label',
         'CERTIFICATE OF REINSTATEMENT FOR DOMESTIC NON-STOCK AND FIRST ORGANIZATION & REPORT WITH NAME CHANGE '),
                                                                                 ('stock', 'FALSE'),
@@ -211,387 +211,387 @@ tx_codes = [OrderedDict([('cd_trans_type', 'ACAS'),
                                                                                 ('domestic', 'TRUE'),
                                                                                 ('foreign_company', 'FALSE'),
                                                                                 ('benefit', 'FALSE'),
-                                                                                ('type', 'CORP')]), OrderedDict(
+                                                                                ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CZS'), ('label', 'CERTIFICATE OF REINSTATEMENT FOR STOCK CORPORATION (DOMESTIC)'),
          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict([('cd_trans_type', 'CZSN'), (
+         ('company_type', 'CORP')]), OrderedDict([('cd_trans_type', 'CZSN'), (
         'label', 'CERTIFICATE OF REINSTATEMENT FOR DOMESTIC STOCK CORPORATION WITHOUT NAME CHANGE '), ('stock', 'TRUE'),
                                           ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-                                          ('benefit', 'FALSE'), ('type', 'CORP')]), OrderedDict(
+                                          ('benefit', 'FALSE'), ('company_type', 'CORP')]), OrderedDict(
         [('cd_trans_type', 'CZSPO'), ('label',
                                       'CERTIFICATE OF REINSTATEMENT FOR DOMESTIC STOCK AND FIRST ORGANIZATION & REPORT WITHOUT NAME CHANGE '),
          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'CORP')]), OrderedDict([('cd_trans_type', 'CZSPON'), (
+         ('company_type', 'CORP')]), OrderedDict([('cd_trans_type', 'CZSPON'), (
         'label', 'CERTIFICATE OF REINSTATEMENT FOR DOMESTIC STOCK AND FIRST ORGANIZATION & REPORT WITH NAME CHANGE '),
                                           ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'),
-                                          ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', 'CORP')]),
+                                          ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', 'CORP')]),
             OrderedDict([('cd_trans_type', 'GP'), (
                 'label', 'STATEMENT OF PARTNERSHIP AUTHORITY (GENERAL PARTNERSHIP) [PARTNERSHIP FORMATION]'),
                          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'),
-                         ('benefit', 'FALSE'), ('type', 'GP')]), OrderedDict(
+                         ('benefit', 'FALSE'), ('company_type', 'GP')]), OrderedDict(
         [('cd_trans_type', 'GPA'), ('label', 'BUSINESS AMENDMENT FOR GENERAL PARTNERSHIP'), ('stock', 'FALSE'),
-         ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', 'GP')]),
+         ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', 'GP')]),
             OrderedDict([('cd_trans_type', 'GPC'), ('label', 'STATEMENT OF CANCELLATION FOR GENERAL PARTNERSHIP'),
                          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'),
-                         ('benefit', 'FALSE'), ('type', 'GP')]), OrderedDict(
+                         ('benefit', 'FALSE'), ('company_type', 'GP')]), OrderedDict(
         [('cd_trans_type', 'GPDIS'), ('label', 'STATEMENT OF DISSOLUTION FOR GENERAL PARTNERSHIP'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'GP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'GP')]), OrderedDict(
         [('cd_trans_type', 'GPDISA'), ('label', 'STATEMENT OF DISSOCIATION FOR LIMITED PARTNERSHIP (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'IAS'), ('label', 'INCORPORATION AMENDMENT OF A STOCK INSURANCE COMPANY'),
          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'INS')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'INS')]), OrderedDict(
         [('cd_trans_type', 'IN'), ('label', 'BUSINESS FORMATION FOR DOMESTIC INSURANCE (NON-STOCK)'),
          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'INS')]), OrderedDict(
+         ('company_type', 'INS')]), OrderedDict(
         [('cd_trans_type', 'IS'), ('label', 'BUSINESS FORMATION FOR DOMESTIC INSURANCE (STOCK)'), ('stock', 'TRUE'),
-         ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', 'INS')]),
+         ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', 'INS')]),
             OrderedDict(
                 [('cd_trans_type', 'LC'), ('label', 'BUSINESS FORMATION FOR LIMITED LIABILITY COMPANY (DOMESTIC)'),
                  ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-                 ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict(
+                 ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'LCA'), ('label', 'BUSINESS AMENDMENTS FOR LIMITED LIABILITY COMPANY (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'LCAA'), ('label', 'AGENT ADDRESS CHANGE FOR LIMITED LIABILITY COMPANY (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'LCAC'), ('label', 'AGENT CHANGE FOR LIMITED LIABILITY COMPANY (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'LCACM'), ('label', 'BUSINESS ADDRESS CHANGE FOR LIMITED LIABILITY COMPANY (DOMESTIC) '),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'LCAR'), ('label', 'RESIGNATION OF AGENT  FOR LIMITED LIABILITY COMPANY (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict([('cd_trans_type', 'LCCO'), (
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict([('cd_trans_type', 'LCCO'), (
         'label', 'CERTIFICATE OF CONSOLIDATION FOR LIMITED LIABILITY COMPANY (DOMESTIC)'), ('stock', 'FALSE'),
                                                                ('nonstock', 'FALSE'), ('domestic', 'TRUE'),
                                                                ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-                                                               ('type', 'LLC')]), OrderedDict(
+                                                               ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'LCD'), ('label', 'BUSINESS DISSOLUTION FOR LIMITED LIABILITY COMPANY (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'LCF'), ('label', 'BUSINESS FORMATION FOR LIMITED LIABILITY COMPANY (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'LCFA'), ('label', 'BUSINESS AMENDMENTS FOR LIMITED LIABILITY COMPANY (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'LCFAA'), ('label', 'AGENT ADDRESS CHANGE FOR LIMITED LIABILITY COMPANY (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'LCFAC'), ('label', 'AGENT CHANGE FOR LIMITED LIABILITY COMPANY (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'LCFACM'), ('label', 'BUSINESS ADDRESS CHANGE FOR LIMITED LIABILITY COMPANY (FOREIGN) '),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'LCFAR'), ('label', 'RESIGNATION OF AGENT  FOR LIMITED LIABILITY COMPANY (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LLC')]), OrderedDict([('cd_trans_type', 'LCFC'), (
+         ('benefit', 'FALSE'), ('company_type', 'LLC')]), OrderedDict([('cd_trans_type', 'LCFC'), (
         'label', 'CERTIFICATE OF CANCELLATION FOR  LIMITED LIABILITY COMPANY (FOREIGN)'), ('stock', 'FALSE'),
                                                                ('nonstock', 'FALSE'), ('domestic', 'FALSE'),
                                                                ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-                                                               ('type', 'LLC')]), OrderedDict(
+                                                               ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'LCINC'),
          ('label', 'INTERIM NOTICE FOR LIMITED LIABILITY COMPANY (DOMESTIC OR FOREIGN)'), ('stock', 'FALSE'),
          ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'LLC')]), OrderedDict(
+         ('company_type', 'LLC')]), OrderedDict(
         [('cd_trans_type', 'LLP'), ('label', 'BUSINESS FORMATION FOR LIMITED LIABILITY PARTNERSHIP (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLP')]), OrderedDict(
         [('cd_trans_type', 'LLPA'), ('label', 'BUSINESS AMENDMENT FOR LIMITED LIABILITY PARTNERSHIP (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLP')]), OrderedDict(
         [('cd_trans_type', 'LLPAC'), ('label', 'AGENT CHANGE  FOR LIMITED LIABILITY PARTNERSHIP (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLP')]), OrderedDict([('cd_trans_type', 'LLPACM'), (
+         ('benefit', 'FALSE'), ('company_type', 'LLP')]), OrderedDict([('cd_trans_type', 'LLPACM'), (
         'label', 'BUSINESS ADDRESS CHANGE FOR LIMITED LIABILITY PARTNERSHIP (DOMESTIC) '), ('stock', 'FALSE'),
                                                                ('nonstock', 'FALSE'), ('domestic', 'TRUE'),
                                                                ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-                                                               ('type', 'LLP')]), OrderedDict(
+                                                               ('company_type', 'LLP')]), OrderedDict(
         [('cd_trans_type', 'LLPF'), ('label', 'BUSINESS FORMATION FOR LIMITED LIABILITY PARTNERSHIP (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LLP')]), OrderedDict(
         [('cd_trans_type', 'LLPFA'), ('label', 'BUSINESS AMENDMENT FOR LIMITED LIABILITY PARTNERSHIP (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLP')]), OrderedDict([('cd_trans_type', 'LLPFAA'), (
+         ('benefit', 'FALSE'), ('company_type', 'LLP')]), OrderedDict([('cd_trans_type', 'LLPFAA'), (
         'label', 'AGENT ADDRESS CHANGE  FOR LIMITED LIABILITY PARTNERSHIP (FOREIGN)'), ('stock', 'FALSE'),
                                                                ('nonstock', 'FALSE'), ('domestic', 'TRUE'),
                                                                ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-                                                               ('type', 'LLP')]), OrderedDict(
+                                                               ('company_type', 'LLP')]), OrderedDict(
         [('cd_trans_type', 'LLPFAC'), ('label', 'AGENT CHANGE  FOR LIMITED LIABILITY PARTNERSHIP (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLP')]), OrderedDict([('cd_trans_type', 'LLPFACM'), (
+         ('benefit', 'FALSE'), ('company_type', 'LLP')]), OrderedDict([('cd_trans_type', 'LLPFACM'), (
         'label', 'BUSINESS ADDRESS CHANGE FOR LIMITED LIABILITY PARTNERSHIP (FOREIGN) '), ('stock', 'FALSE'),
                                                                ('nonstock', 'FALSE'), ('domestic', 'TRUE'),
                                                                ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-                                                               ('type', 'LLP')]), OrderedDict(
+                                                               ('company_type', 'LLP')]), OrderedDict(
         [('cd_trans_type', 'LLPFAR'), ('label', 'RESIGNATION OF AGENT FOR LIMITED LIABILITY PARTNERSHIP (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LLP')]), OrderedDict([('cd_trans_type', 'LLPFW'), (
+         ('benefit', 'FALSE'), ('company_type', 'LLP')]), OrderedDict([('cd_trans_type', 'LLPFW'), (
         'label', 'CERTIFICATE OF WITHDRAWAL FOR LIMITED LIABILITY PARTNERSHIP (FOREIGN)'), ('stock', 'FALSE'),
                                                                ('nonstock', 'FALSE'), ('domestic', 'TRUE'),
                                                                ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-                                                               ('type', 'LLP')]), OrderedDict(
+                                                               ('company_type', 'LLP')]), OrderedDict(
         [('cd_trans_type', 'LLPM'),
          ('label', 'CERTIFICATE OF MERGER FOR DOMESTIC & FOREIGN LIMITED LIABILITY PARTNERSHIP '),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', 'LLP')]), OrderedDict([('cd_trans_type', 'LLPR'), (
+         ('company_type', 'LLP')]), OrderedDict([('cd_trans_type', 'LLPR'), (
         'label', 'RENUNCIATION OF STATUS REPORT FOR LIMITED LIABILITY PARTNERSHIP (DOMESTIC)'), ('stock', 'FALSE'),
                                          ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-                                         ('benefit', 'FALSE'), ('type', 'LLP')]), OrderedDict(
+                                         ('benefit', 'FALSE'), ('company_type', 'LLP')]), OrderedDict(
         [('cd_trans_type', 'LP'), ('label', 'BUSINESS FORMATION FOR LIMITED PARTNERSHIP (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'LPA'), ('label', 'BUSINESS AMENDMENT  FOR LIMITED PARTNERSHIP (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'LPAA'), ('label', 'AGENT ADDRESS CHANGE  FOR LIMITED PARTNERSHIP (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'LPAC'), ('label', 'AGENT CHANGE  FOR LIMITED PARTNERSHIP (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'LPACM'), ('label', 'BUSINESS ADDRESS CHANGE FOR LIMITED PARTNERSHIP (DOMESTIC) '),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'LPAR'), ('label', 'RESIGNATION OF AGENT  FOR LIMITED PARTNERSHIP (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'LPC'), ('label', 'CERTIFICATE OF CANCELLATION  FOR LIMITED PARTNERSHIP (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'LPF'), ('label', 'BUSINESS FORMATION FOR LIMITED PARTNERSHIP (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'LPFA'), ('label', 'BUSINESS AMENDMENT  FOR LIMITED PARTNERSHIP (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'LPFAA'), ('label', 'AGENT ADDRESS CHANGE  FOR LIMITED PARTNERSHIP (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'LPFAC'), ('label', 'AGENT CHANGE  FOR LIMITED PARTNERSHIP (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'LPFACM'), ('label', 'BUSINESS ADDRESS CHANGE FOR LIMITED PARTNERSHIP (FOREIGN) '),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'LPFAR'), ('label', 'RESIGNATION OF AGENT  FOR LIMITED PARTNERSHIP (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'LPFC'), ('label', 'CERTIFICATE OF CANCELLATION  FOR LIMITED PARTNERSHIP (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'LP')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'LP')]), OrderedDict(
         [('cd_trans_type', 'ST'), ('label', 'BUSINESS FORMATION FOR STATUTORY TRUST (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'STAT')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'STAT')]), OrderedDict(
         [('cd_trans_type', 'STA'), ('label', 'BUSINESS AMENDMENT FOR STATUTORY TRUST (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'STAT')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'STAT')]), OrderedDict(
         [('cd_trans_type', 'STAC'), ('label', 'AGENT CHANGE FOR STATUTORY TRUST (DOMESTIC)'), ('stock', 'FALSE'),
          ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'STAT')]), OrderedDict(
+         ('company_type', 'STAT')]), OrderedDict(
         [('cd_trans_type', 'STACM'), ('label', 'BUSINESS ADDRESS CHANGE FOR STATUTORY TRUST (DOMESTIC) '),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'STAT')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'STAT')]), OrderedDict(
         [('cd_trans_type', 'STAR'), ('label', 'RESIGNATION OF AGENT FOR STATUTORY TRUST (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'STAT')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'STAT')]), OrderedDict(
         [('cd_trans_type', 'STC'), ('label', 'CERTIFICATE OF CANCELLATION FOR STATUTORY TRUST (DOMESTIC)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', 'STAT')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'STAT')]), OrderedDict(
         [('cd_trans_type', 'STF'), ('label', 'BUSINESS FORMATION FOR STATUTORY TRUST (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'STAT')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'STAT')]), OrderedDict(
         [('cd_trans_type', 'STFA'), ('label', 'BUSINESS AMENDMENT FOR STATUTORY TRUST (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'STAT')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'STAT')]), OrderedDict(
         [('cd_trans_type', 'STFAA'), ('label', 'AGENT ADDRESS CHANGE FOR STATUTORY TRUST (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'STAT')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'STAT')]), OrderedDict(
         [('cd_trans_type', 'STFAC'), ('label', 'AGENT CHANGE FOR STATUTORY TRUST (FOREIGN)'), ('stock', 'FALSE'),
          ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', 'STAT')]), OrderedDict(
+         ('company_type', 'STAT')]), OrderedDict(
         [('cd_trans_type', 'STFACM'), ('label', 'BUSINESS ADDRESS CHANGE FOR STATUTORY TRUST (FOREIGN) '),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'STAT')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'STAT')]), OrderedDict(
         [('cd_trans_type', 'STFAR'), ('label', 'RESIGNATION OF AGENT FOR STATUTORY TRUST (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'STAT')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'STAT')]), OrderedDict(
         [('cd_trans_type', 'STFC'), ('label', 'CERTIFICATE OF CANCELLATION FOR STATUTORY TRUST (FOREIGN)'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'TRUE'),
-         ('benefit', 'FALSE'), ('type', 'STAT')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', 'STAT')]), OrderedDict(
         [('cd_trans_type', 'STM'), ('label', 'CERTIFICATE OF MERGER FOR STATUTORY TRUST '), ('stock', 'FALSE'),
          ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-         ('type', 'STAT')]), OrderedDict(
+         ('company_type', 'STAT')]), OrderedDict(
         [('cd_trans_type', 'CCNR'), ('label', 'CANCELLATION OF NAME RESERVATION FOR ALL ENTITIES'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'TRUE'),
-         ('type', '')]), OrderedDict([('cd_trans_type', 'ACM'), ('label',
+         ('company_type', '')]), OrderedDict([('cd_trans_type', 'ACM'), ('label',
                                                                  'BUSINESS ADDRESS CHANGE FOR CORPORATIONS, LIMITED PARTNERSHIP, LIMITED LIABILITY COMPANY, LIMITED LIABILITY PARTNERSHIP, STATUTARY TRUST (DOMESTIC & FOREIGN) [INCLUDING BENEFIT CORPORATION]'),
                                       ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'TRUE'),
-                                      ('foreign_company', 'TRUE'), ('benefit', 'TRUE'), ('type', '')]), OrderedDict(
+                                      ('foreign_company', 'TRUE'), ('benefit', 'TRUE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'XOVRB'), ('label', 'TRANSACTION TYPE FOR OVERRIDE FILING IN LAGACY'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'RSHR'), ('label', 'RETIREMENT OF SHARES'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'NOTC'), ('label',
                                      'BULK NOTICES ARE FILING FROM LEGACY APPLICATION AND THESE DETAILS ARE SHOWING IN ADMINSTRATIVE DISSOLUTION'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'MSC'), ('label', 'NOT PROVIDED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'MISC'), ('label', 'NOT PROVIDED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'LPM'),
          ('label', 'CERTIFICATE OF MERGER FOR DOMESTIC & FOREIGN NON LIMITED PARTNERSHIP '), ('stock', 'FALSE'),
-         ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'), ('type', '')]),
+         ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'), ('company_type', '')]),
             OrderedDict([('cd_trans_type', 'LPLC'),
                          ('label', 'CERTIFICATE OF MERGER FOR DOMESTIC & FOREIGN NON LIMITED PARTNERSHIP'),
                          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'),
-                         ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+                         ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'LLPLC'), ('label', 'ORGANIZATION'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'LFCAA'), ('label', 'NOT PROVIDED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'LFC'), ('label', 'NOT PROVIDED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'LFACM'), ('label', 'NOT PROVIDED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'LCM'),
          ('label', 'CERTIFICATE OF MERGER FOR DOMESTIC & FOREIGN NON LIMITED LIABILITY COMPANY '),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', '')]), OrderedDict(
+         ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'IASC'), ('label', 'AMENDMENT'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'IANC'), ('label', 'AMENDMENT'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'GPCGPLP'),
          ('label', 'STATEMENT OF CONVERSION FROM GENERAL PARTNERSHIP TO DOMESTIC LIMITED PARTNERSHIP'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', '')]), OrderedDict([('cd_trans_type', 'GPCGPLC'), (
+         ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict([('cd_trans_type', 'GPCGPLC'), (
         'label', 'STATEMENT OF CONVERSION FROM GENERAL PARTNERSHIP TO DOMESTIC LIMITED LIABILITY COMPANY'),
                                                             ('stock', 'FALSE'), ('nonstock', 'FALSE'),
                                                             ('domestic', 'TRUE'), ('foreign_company', 'FALSE'),
-                                                            ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+                                                            ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'FFTD'), ('label', 'NOT PROVIDED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CXMB'), ('label', 'MISCELLANEOUS'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CVN'), ('label', 'CONVERSION'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CV'), ('label', 'CONVERSION'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CUANC'), ('label', 'AMENDMENT'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CSES'), ('label', 'SHARE EXCHANGE'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CPCS'), ('label', 'ADDITIONAL PRINCIPAL'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CPCN'), ('label', 'CEASE PRINCIPAL'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'COSCA'), ('label', 'ORGANIZATION AND FIRST REPORT'), ('stock', 'FALSE'),
-         ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]),
+         ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]),
             OrderedDict(
                 [('cd_trans_type', 'COR'), ('label', 'NOT PROVIDED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-                 ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+                 ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CNSL'), ('label', 'NOT PROVIDED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CNRT'), ('label', 'TRANSFER OF RESERVED NAME FOR ALL ENTITIES'), ('stock', 'FALSE'),
-         ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]),
+         ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]),
             OrderedDict(
                 [('cd_trans_type', 'CNR'), ('label', 'NAME RESERVATION FOR ALL ENTITIES'), ('stock', 'FALSE'),
                  ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-                 ('type', '')]), OrderedDict(
+                 ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CMSL'), ('label', 'NOT PROVIDED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CMSC'), ('label', 'MERGER'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CMS'), ('label', 'CERTIFICATE OF MERGER FOR DOMESTIC & FOREIGN STOCK CORPORATION '),
          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'),
-         ('type', '')]), OrderedDict(
+         ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CMNC'), ('label', 'MERGER'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CMIS'), ('label', 'MISCELLANEOUS'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CISCS'), ('label', 'CERTIFICATE OF CREDIT UNION FOR STOCK CORPORATION (IN LEGACY)'),
          ('stock', 'TRUE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CISCA'), ('label', 'INCORPORATED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CICR'), ('label', 'INCORPORATED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CICC'), ('label', 'INCORPORATED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CFNC'), ('label', 'INCORPORATED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CFN'), ('label', 'INCORPORATED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CES'), ('label', 'ADDITIONAL PRINCIPAL'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CEN'), ('label', 'ADDITIONAL PRINCIPAL'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CDRSPO'), ('label', 'DISSOLUTION'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CDRNPO'), ('label', 'DISSOLUTION'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CDES'), ('label', 'DISSOLUTION'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CDEN'), ('label', 'DISSOLUTION'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CCSAO'), ('label', 'CONSOLIDATION'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CCSA'), ('label', 'CONSOLIDATION'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CCORS'),
          ('label', 'CERTIFICATE OF CORRECTION FOR STOCK CORPORATIONS (DOMESTIC & FOREIGN)'), ('stock', 'TRUE'),
-         ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'), ('type', '')]),
+         ('nonstock', 'FALSE'), ('domestic', 'TRUE'), ('foreign_company', 'TRUE'), ('benefit', 'FALSE'), ('company_type', '')]),
             OrderedDict(
                 [('cd_trans_type', 'CCNAO'), ('label', 'CONSOLIDATION'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-                 ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+                 ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CCNA'), ('label', 'CONSOLIDATION'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CCAS'), ('label', 'ABANDONMENT'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CCANL'), ('label', 'CANCELLATION OF SHARES'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CASC'), ('label', 'AMENDMENT'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CANC'), ('label', 'AMENDMENT'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'BT'), ('label', 'INCORPORATED'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'BRVKD'), ('label', 'ON DEMAND BATCH PROGRAM FOR BULK FILING FOR REVOKED'),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'BFFTD'), ('label', 'ON DEMAND BATCH PROGRAM FOR BULK FILING FOR FORFEITED '),
          ('stock', 'FALSE'), ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'BASC'), ('label', 'AMENDMENT'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'BANC'), ('label', 'AMENDMENT'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'BAADDR'), ('label', 'BULK FILING CHANGE AGENT ADDRESS BATCH JOB'), ('stock', 'FALSE'),
-         ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')]),
+         ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')]),
             OrderedDict([('cd_trans_type', 'BAADD'), ('label', 'AGENT ADDRESS CHANGE'), ('stock', 'FALSE'),
                          ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
-                         ('type', '')]), OrderedDict([('cd_trans_type', 'CFRIN'), (
+                         ('company_type', '')]), OrderedDict([('cd_trans_type', 'CFRIN'), (
         'label', 'CERTIFICATE OF RE-DOMESTICATION FOR NON-STOCK INSURANCE CHANGE FROM FOREIGN TO DOMESTIC'),
                                                       ('stock', 'FALSE'), ('nonstock', 'TRUE'),
                                                       ('domestic', 'FALSE'), ('foreign_company', 'FALSE'),
-                                                      ('benefit', 'FALSE'), ('type', 'INS')]), OrderedDict(
+                                                      ('benefit', 'FALSE'), ('company_type', 'INS')]), OrderedDict(
         [('cd_trans_type', 'CISCN'), ('label', 'CERTIFICATE OF CREDIT UNION FOR NON STOCK CORPORATION (IN LEGACY)'),
          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'CMN'), ('label', 'CERTIFICATE OF MERGER FOR DOMESTIC & FOREIGN NON STOCK CORPORATION '),
          ('stock', 'FALSE'), ('nonstock', 'TRUE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'),
-         ('benefit', 'FALSE'), ('type', '')]), OrderedDict(
+         ('benefit', 'FALSE'), ('company_type', '')]), OrderedDict(
         [('cd_trans_type', 'XPREBFALSE'), ('label', 'FALSE'), ('stock', 'FALSE'), ('nonstock', 'FALSE'),
-         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('type', '')])]
+         ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', '')])]
 
 fips = [OrderedDict([('town', 'Connecticut'), ('fips', '09'), ('county_fips', '09'), ('county', 'Connecticut'),
                      ('subtown', 'Connecticut')]), OrderedDict(
