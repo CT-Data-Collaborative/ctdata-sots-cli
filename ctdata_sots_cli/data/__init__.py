@@ -1072,7 +1072,7 @@ fips = [OrderedDict([('town', 'Connecticut'), ('fips', '09'), ('county_fips', '0
     [('town', 'Suffield'), ('fips', '0900374540'), ('county_fips', '09003'), ('county', 'Hartford County'),
      ('subtown', 'West Suffield')]), OrderedDict(
     [('town', 'West Hartford'), ('fips', '0900382590'), ('county_fips', '09003'), ('county', 'Hartford County'),
-     ('subtown', "Bishop's Corner")]), OrderedDict(
+     ('subtown', "Bishop''s Corner")]), OrderedDict(
     [('town', 'West Hartford'), ('fips', '0900382590'), ('county_fips', '09003'), ('county', 'Hartford County'),
      ('subtown', 'Elmwood')]), OrderedDict(
     [('town', 'Windsor'), ('fips', '0900387000'), ('county_fips', '09003'), ('county', 'Hartford County'),

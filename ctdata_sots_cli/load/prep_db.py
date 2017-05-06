@@ -218,7 +218,7 @@ def buildStatusAndSubtypeTable(conn, cursor):
 
     fips_code_data_query = """INSERT INTO fips(town, fips, county_fips, county, subtown) VALUES"""
     for i, row in enumerate(fips):
-        row_query = "({}, {}, {}, {}, {})".format(row['town'], row['fips'], row['county_fips'], row['county'], row['subtown'])
+        row_query = "('{}', '{}', '{}', '{}', '{}')".format(row['town'], row['fips'], row['county_fips'], row['county'], row['subtown'])
         if i < len(fips) - 1:
             row_query += ','
         fips_code_data_query += row_query
