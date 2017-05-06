@@ -209,7 +209,7 @@ def buildStatusAndSubtypeTable(conn, cursor):
     for i, row in enumerate(tx_codes):
         row_query = "('{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(row['cd_trans_type'], row['label'],
                                                                               row['stock'], row['nonstock'],
-                                                                              row['domestic'],row['foreign'],
+                                                                              row['domestic'],row['foreign_company'],
                                                                               row['benefit'])
         if i < len(tx_codes) - 1:
             row_query += ','
