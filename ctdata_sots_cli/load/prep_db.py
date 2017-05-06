@@ -229,6 +229,7 @@ def build_supplemental_tables(conn, cursor):
         if i < len(tx_codes) - 1:
             row_query += ','
         tx_code_data_query += row_query
+    click.echo(tx_code_data_query)
     q_list.append((tx_code_data_query, 'Adding Transaction Codes'))
 
     fips_code_data_query = """INSERT INTO fips(town, fips, county_fips, county, subtown) VALUES"""
