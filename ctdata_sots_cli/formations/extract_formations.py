@@ -1,4 +1,4 @@
-from psycopg2 import connect, DataError, IntegrityError
+from psycopg2 import connect
 
 EXTRACT_FORMATIONS_QUERY = """
     SELECT
@@ -43,14 +43,7 @@ EXTRACT_FORMATIONS_QUERY = """
         cd_subtype ASC
 """
 
-def connectDB(db, user, pwd, host, port):
-    """Opens a psycopg2 db connction using configuration parems set in self.scriptVars."""
-    conn = connect(database=db, user=user, password=pwd, host=host, port=port)
-    cursor = conn.cursor()
-    return conn, cursor
-
-
-def extract(db, user, pwd, host, port, outfile):
+def extract(conn, cursor, outfile):
     conn, cursor = connectDB(db, user, pwd, host, port)
     outputquery = 'copy ({0}) to stdout with csv header'.format(EXTRACT_FORMATIONS_QUERY)
 

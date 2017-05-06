@@ -154,7 +154,8 @@ def loaddb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
               help='Output file to save results to')
 def extract_formations(dbhost, dbuser, dbpass, dbname, dbport, output):
     """Extract CT business formation data"""
-    extract(dbname, dbuser, dbpass, dbhost, dbport, output)
+    conn, cursor = connect_db(dbname, dbuser, dbpass, dbhost, dbport)
+    extract(conn, cursor, output)
 
 if __name__ == '__main__':
     main()
