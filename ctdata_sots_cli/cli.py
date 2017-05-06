@@ -113,7 +113,6 @@ def drop_supplemental(dbhost, dbuser, dbpass, dbname, dbport):
     drop_supplemental(conn, cursor)
 
 
-
 @main.command()
 @click.option('--dbhost', default='0.0.0.0',
               help='IP address of database server where data should be published to.')
