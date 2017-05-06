@@ -190,7 +190,8 @@ def build_supplemental_tables(conn, cursor):
         nonstock character varying,
         domestic character varying,
         foreign_company character varying,
-        benefit character varying);"""
+        benefit character varying,
+        company_type character varying);"""
 
     q_list.append((tx_codes_table_query, 'Creating Table: Transaction Codes'))
 
