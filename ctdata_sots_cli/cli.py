@@ -111,7 +111,7 @@ def add_supplemental(dbhost, dbuser, dbpass, dbname, dbport):
               help="Port to access db at.")
 def drop_supplemental(dbhost, dbuser, dbpass, dbname, dbport):
     conn, cursor = connect_db(dbname, dbuser, dbpass, dbhost, dbport)
-    # drop_supplemental(conn, cursor)
+    drop_supplemental(conn, cursor)
 
 
 @main.command()

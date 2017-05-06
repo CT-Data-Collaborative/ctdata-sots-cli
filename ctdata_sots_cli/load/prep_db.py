@@ -79,9 +79,7 @@ def build_tables(conn, cursor, schemapath):
             queryParts.extend([fieldDef])
         queryParts.extend(['PRIMARY_ID UUID'])
 
-        base_query = """CREATE TABLE IF NOT EXISTS {tableName} (
-        {queryParts},
-        PRIMARY KEY ({tablePK})"""
+        base_query = """CREATE TABLE IF NOT EXISTS {tableName} ({queryParts}, PRIMARY KEY ({tablePK})"""
 
         if table['name'] == 'BUS_MASTER':
             base_query += ", UNIQUE (ID_BUS));"
@@ -136,9 +134,10 @@ def load_data(conn, cursor, schemapath, datapath):
 
 
 def drop_supplemental(conn, cursor):
-    for table in ['business_subtype', 'business_status', 'tx_codes', 'fips']:
-        query = """DROP TABLE IF EXISTS {} CASCADE;""".format(table)
-        click.echo(query)
+    click.echo("drop supplemental called")
+    # for table in ['business_subtype', 'business_status', 'tx_codes', 'fips']:
+    #     query = """DROP TABLE IF EXISTS {} CASCADE;""".format(table)
+    #     click.echo(query)
         # try:
         #     print("Dropping Table: " + table)
         #     cursor.execute(query)
