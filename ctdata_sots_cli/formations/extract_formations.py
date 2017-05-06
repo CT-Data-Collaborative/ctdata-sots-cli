@@ -44,7 +44,6 @@ EXTRACT_FORMATIONS_QUERY = """
 """
 
 def extract(conn, cursor, outfile):
-    conn, cursor = connectDB(db, user, pwd, host, port)
     outputquery = 'copy ({0}) to stdout with csv header'.format(EXTRACT_FORMATIONS_QUERY)
 
     with open(outfile, 'w') as f:
