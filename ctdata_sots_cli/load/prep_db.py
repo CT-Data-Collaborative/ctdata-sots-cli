@@ -1,5 +1,6 @@
 import os
 import yaml
+import click
 from psycopg2 import connect, DataError, IntegrityError
 
 from ctdata_sots_cli.data import tx_codes, fips
