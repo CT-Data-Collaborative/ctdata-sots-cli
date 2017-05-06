@@ -175,9 +175,8 @@ def buildStatusAndSubtypeTable(conn, cursor):
         stock character varying,
         nonstock character varying,
         domestic character varying,
-        foreign character varying,
-        benefit character varying,
-        type character varying);"""
+        foreign_company character varying,
+        benefit character varying);"""
 
     q_list.append((tx_codes_table_query, 'Creating Table: Transaction Codes'))
 
@@ -208,10 +207,10 @@ def buildStatusAndSubtypeTable(conn, cursor):
 
     tx_code_data_query = """INSERT INTO tx_codes(cd_trans_type, label, stock. nonstock, domestic, foreign, beneift, type) VALUES """
     for i, row in enumerate(tx_codes):
-        row_query = "('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(row['cd_trans_type'], row['label'],
+        row_query = "('{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(row['cd_trans_type'], row['label'],
                                                                               row['stock'], row['nonstock'],
                                                                               row['domestic'],row['foreign'],
-                                                                              row['benefit'], row['type'])
+                                                                              row['benefit'])
         if i < len(tx_codes) - 1:
             row_query += ','
         tx_code_data_query += row_query
