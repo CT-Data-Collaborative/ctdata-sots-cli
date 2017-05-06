@@ -182,7 +182,7 @@ def buildStatusAndSubtypeTable(conn, cursor):
     q_list.append((tx_codes_table_query, 'Creating Table: Transaction Codes'))
 
     fips_table_query = """CREATE TABLE IF NOT EXISTS fips (
-        town character varying PRIMARY KEY,
+        town character varying,
         fips character varying,
         county_fips character varying,
         county character varying,
@@ -212,16 +212,15 @@ def buildStatusAndSubtypeTable(conn, cursor):
                                                                               row['stock'], row['nonstock'],
                                                                               row['domestic'],row['foreign'],
                                                                               row['benefit'], row['type'])
-        if i < len(types) - 1:
+        if i < len(tx_codes) - 1:
             row_query += ','
         tx_code_data_query += row_query
     q_list.append((tx_codes_table_query, 'Adding Transaction Codes'))
 
     fips_code_data_query = """INSERT INTO fips(town, fips, county_fips, county, subtown) VALUES"""
     for i, row in enumerate(fips):
-        row_query = "('{}', '{}', '{}', '{}', '{}', '{}')".format(row['town'], row['fips'], row['county_fips'],
-                                                                  row['county'], row['subtown'])
-        if i < len(types) - 1:
+        row_query = "('{}', '{}', '{}', '{}', '{}')".format(row['town'], row['fips'], row['county_fips'], row['county'], row['subtown'])
+        if i < len(fips) - 1:
             row_query += ','
         fips_code_data_query += row_query
     q_list.append((fips_code_data_query, 'Adding FIPS Data'))
