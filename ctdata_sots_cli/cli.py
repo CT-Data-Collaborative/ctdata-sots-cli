@@ -12,7 +12,7 @@ import click
 from .cleaner import cleaner
 from .formations import extract
 from .prep import prep_release_files
-from .load.prep_db import connectDB, dropTables, buildStatusAndSubtypeTable, buildTables, loadData
+from .load.prep_db import connect_db, drop_tables, build_supplemental, drop_supplemental, build_tables, load_data
 from .load.helpers import setup_engine
 from .load.build_indices import build_index
 
@@ -76,10 +76,10 @@ def prepdb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
     """
     Prepare SOTS database, build tables, load data, build indices, and then cleanup
     """
-    conn, cursor = connectDB(dbname, dbuser, dbpass, dbhost, dbport)
-    dropTables(conn, cursor, schema)
-    buildTables(conn, cursor, schema)
-    loadData(conn, cursor, schema, data)
+    conn, cursor = connect_db(dbname, dbuser, dbpass, dbhost, dbport)
+    drop_tables(conn, cursor, schema)
+    build_tables(conn, cursor, schema)
+    load_data(conn, cursor, schema, data)
     conn.close()
 
 @main.command()
@@ -94,8 +94,24 @@ def prepdb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
 @click.option('--dbport', default='5432',
               help="Port to access db at.")
 def add_supplemental(dbhost, dbuser, dbpass, dbname, dbport):
-    conn, cursor = connectDB(dbname, dbuser, dbpass, dbhost, dbport)
-    buildStatusAndSubtypeTable(conn, cursor)
+    conn, cursor = connect_db(dbname, dbuser, dbpass, dbhost, dbport)
+    build_supplemental(conn, cursor)
+
+@main.command()
+@click.option('--dbhost', default='0.0.0.0',
+              help='IP address of database server where data should be published to.')
+@click.option('--dbuser', default='postgres',
+              help='Database user.')
+@click.option('--dbpass', default='',
+              help='Password for database.')
+@click.option('--dbname', default='postgres',
+              help='Name of database on host where data should be publish to.')
+@click.option('--dbport', default='5432',
+              help="Port to access db at.")
+def drop_supplemental(dbhost, dbuser, dbpass, dbname, dbport):
+    conn, cursor = connect_db(dbname, dbuser, dbpass, dbhost, dbport)
+    drop_supplemental(conn, cursor)
+
 
 
 @main.command()

@@ -11,7 +11,7 @@ EXTRACT_FORMATIONS_QUERY = """
         status.description,
         subtypes.cd_subtype,
         subtypes.description,
-        tx.type as type,
+        tx.company_type as type,
         CASE WHEN length(master.ad_city) > 0 then master.ad_city
          ELSE master.ad_mail_city
         END as city,

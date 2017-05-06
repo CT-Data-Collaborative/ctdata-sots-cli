@@ -4,14 +4,14 @@ from psycopg2 import connect, DataError, IntegrityError
 
 from ctdata_sots_cli.data import tx_codes, fips
 
-def connectDB(db, user, pwd, host, port):
+def connect_db(db, user, pwd, host, port):
     """Opens a psycopg2 db connction using configuration parems set in self.scriptVars."""
     conn = connect(database=db, user=user, password=pwd, host=host, port=port)
     cursor = conn.cursor()
     return conn, cursor
 
 
-def dropTables(conn, cursor, schemapath):
+def drop_tables(conn, cursor, schemapath):
     """Drop all tables as specified in schema."""
 
     with open(os.path.join(schemapath, 'structure.yml'), 'r') as f:
@@ -41,7 +41,7 @@ def dropTables(conn, cursor, schemapath):
             conn.commit()
 
 
-def buildTables(conn, cursor, schemapath):
+def build_tables(conn, cursor, schemapath):
     """Read schema files and build tables.
 
         Args:
@@ -105,7 +105,7 @@ def buildTables(conn, cursor, schemapath):
             conn.commit()
 
 
-def loadData(conn, cursor, schemapath, datapath):
+def load_data(conn, cursor, schemapath, datapath):
     with open(os.path.join(schemapath, 'structure.yml'), 'r') as f:
         structure = yaml.load(f.read())
     for table in structure['tables']:
@@ -134,8 +134,21 @@ def loadData(conn, cursor, schemapath, datapath):
                 print(e.pgcode)
                 print("...rolling back")
 
+def drop_supplemental(conn, cursor):
+    for table in ['business_subtype', 'business_status', 'tx_codes', 'fips']:
+        query = """DROP TABLE IF EXISTS {} CASCADE;""".format(table)
+        try:
+            print("Dropping Table: " + table)
+            cursor.execute(query)
+        except Exception as e:
+            print(e)
+            conn.rollback()
+        else:
+            # no errors!
+            conn.commit()
 
-def buildStatusAndSubtypeTable(conn, cursor):
+
+def build_supplemental(conn, cursor):
     q_list = []
     status = [('AC', 'Active'), ('CN', 'Cancelled'), ('CS', 'Consolidation'), ('CV', 'Converted'),
               ('D', 'Dissolved'),
@@ -207,10 +220,10 @@ def buildStatusAndSubtypeTable(conn, cursor):
 
     tx_code_data_query = """INSERT INTO tx_codes(cd_trans_type, label, stock. nonstock, domestic, foreign, beneift, type) VALUES """
     for i, row in enumerate(tx_codes):
-        row_query = "('{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(row['cd_trans_type'], row['label'],
+        row_query = "('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(row['cd_trans_type'], row['label'],
                                                                               row['stock'], row['nonstock'],
                                                                               row['domestic'],row['foreign_company'],
-                                                                              row['benefit'])
+                                                                              row['benefit'], row['company_type'])
         if i < len(tx_codes) - 1:
             row_query += ','
         tx_code_data_query += row_query
