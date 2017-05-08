@@ -7,7 +7,7 @@ ADDRESS_CHANGE_QUERY = """
     FROM
         bus_filing
     WHERE
-        cd_trans_type IN ('ACM','LCACM','LCFACM','LLPACM','LLPFACM','LPACM','LPFACM','STACM','STFACM');
+        cd_trans_type IN ('ACM','LCACM','LCFACM','LLPACM','LLPFACM','LPACM','LPFACM','STACM','STFACM')
     """
 
 EXTRACT_FORMATIONS_QUERY = """
