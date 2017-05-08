@@ -1,5 +1,15 @@
 from psycopg2 import connect
 
+ADDRESS_CHANGE_QUERY = """
+    SELECT
+        id_bus_flng,
+        EXTRACT(YEAR FROM dt_filing) AS year
+    FROM
+        bus_filing
+    WHERE
+        cd_trans_type IN ('ACM','LCACM','LCFACM','LLPACM','LLPFACM','LPACM','LPFACM','STACM','STFACM');
+    """
+
 EXTRACT_FORMATIONS_QUERY = """
     SELECT
         master.id_bus,
@@ -43,8 +53,11 @@ EXTRACT_FORMATIONS_QUERY = """
         cd_subtype ASC
 """
 
-def extract(conn, cursor, outfile):
-    outputquery = 'copy ({0}) to stdout with csv header'.format(EXTRACT_FORMATIONS_QUERY)
+def extract_business_formations(conn, cursor, outfile, query):
+    if query == 'Formations':
+        outputquery = 'copy ({0}) to stdout with csv header'.format(EXTRACT_FORMATIONS_QUERY)
+    elif query == 'Address':
+        outputquery = 'copy ({0}) to stdout with csv header'.format(ADDRESS_CHANGE_QUERY)
 
     with open(outfile, 'w') as f:
         cursor.copy_expert(outputquery, f)

@@ -10,7 +10,7 @@ Main `ctdata_sots_cli` CLI.
 import click
 
 from .cleaner import cleaner
-from .formations import extract
+from .formations import extract_business_formations
 from .prep import prep_release_files
 from .load.prep_db import connect_db, drop_tables, build_supplemental_tables, drop_supplemental_tables, build_tables, load_data
 from .load.helpers import setup_engine
@@ -150,12 +150,13 @@ def loaddb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
               help='Name of database on host where data should be publish to.')
 @click.option('--dbport', default='5432',
               help="Port to access db at.")
+@click.option('--query', '-q', type=click.Choice(['Formations', 'Address']))
 @click.option('--output', '-o', type=click.Path(),
               help='Output file to save results to')
-def extract_formations(dbhost, dbuser, dbpass, dbname, dbport, output):
+def extract_formations(dbhost, dbuser, dbpass, dbname, dbport, query, output):
     """Extract CT business formation data"""
     conn, cursor = connect_db(dbname, dbuser, dbpass, dbhost, dbport)
-    extract(conn, cursor, output)
+    extract_business_formations(conn, cursor, output, query)
 
 if __name__ == '__main__':
     main()
