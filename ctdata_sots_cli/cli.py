@@ -149,7 +149,7 @@ def loaddb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
 @click.option('--dbname', default='postgres',
               help='Name of database on host where data should be publish to.')
 @click.option('--dbport', default='5432',
-              help="Port to access db at.")
+              help="Port server uses for exposing database.")
 @click.option('--query', '-q', type=click.Choice(['Formations', 'Address']))
 @click.option('--output', '-o', type=click.Path(),
               help='Output file to save results to')
