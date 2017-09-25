@@ -1,6 +1,6 @@
 import os
 import codecs
-from setuptools import setup
+from setuptools import setup, find_packages
 
 def read(fname):
     file_path = os.path.join(os.path.dirname(__file__), fname)
@@ -11,7 +11,7 @@ setup(
     description='CLI tool for preparing and publishing CT Secretary of State data',
     long_description=read('README.rst'),
     url='https://github.com/CT-Data-Collaborative/ctdata-sots-cli',
-    packages=['ctdata_sots_cli'],
+    packages=find_packages(),
     package_dir={'ctdata_sots_cli': 'ctdata_sots_cli'},
     author='Sasha Cuerda',
     author_email='scuerda@ctdata.org',
