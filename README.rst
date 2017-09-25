@@ -26,9 +26,7 @@ Installation
 
 ::
 
-    $ git clone https://github.com/CT-Data-Collaborative/ctdata-sots-cli.git
-    $ cd ctdata-sots-cli
-    $ pip install -e .
+    $ pip install git+https://github.com/CT-Data-Collaborative/ctdata-sots-cli.git#egg=sotscli
 
 
 Configuration and Use
