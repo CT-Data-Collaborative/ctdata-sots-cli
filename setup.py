@@ -11,11 +11,12 @@ setup(
     description='CLI tool for preparing and publishing CT Secretary of State data',
     long_description=read('README.rst'),
     url='https://github.com/CT-Data-Collaborative/ctdata-sots-cli',
+    packages=['ctdata_sots_cli'],
+    package_dir={'ctdata_sots_cli': 'ctdata_sots_cli'},
     author='Sasha Cuerda',
     author_email='scuerda@ctdata.org',
     license='MIT',
     version='0.1',
-    py_modules=['ctdata_sots_cli'],
     install_requires=[
         'click>=6.7',
         'PyYaml==3.12',
