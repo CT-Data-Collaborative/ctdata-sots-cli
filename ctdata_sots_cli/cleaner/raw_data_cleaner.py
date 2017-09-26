@@ -205,10 +205,10 @@ class cleaner(object):
 
     def _handle_logged_errors(self, bad_lines, schema, outfilename, line_length):
         filtered_bad_lines = [row for row in bad_lines if not row == '\x1a']
-        grouped_bad_lines = defaultdict(list)
+        unique_bad_lines = []
         for row in filtered_bad_lines:
-            grouped_bad_lines[row['id_bus']].append(row)
-        unique_bad_lines = [v[0] for k,v in grouped_bad_lines.items()]
+            if row not in unique_bad_lines:
+                unique_bad_lines.append(row)
         good_lines = []
         holding = ""
         for line in unique_bad_lines:
