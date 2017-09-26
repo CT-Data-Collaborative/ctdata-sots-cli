@@ -212,7 +212,6 @@ class cleaner(object):
                 new_line = line.replace("…", ", ")
             else:
                 new_line = line.replace("\r", "")
-            print(new_line)
             holding += new_line
         if len(holding) == line_length:
             good_lines.append(holding)
