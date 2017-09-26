@@ -1,7 +1,7 @@
 from os import walk, path
 from datetime import datetime, time
 import yaml
-from collections import namedtuple, defaultdict
+from collections import namedtuple
 import codecs
 import unicodecsv as ucsv
 import json
@@ -205,13 +205,9 @@ class cleaner(object):
 
     def _handle_logged_errors(self, bad_lines, schema, outfilename, line_length):
         filtered_bad_lines = [row for row in bad_lines if not row == '\x1a']
-        unique_bad_lines = []
-        for row in filtered_bad_lines:
-            if row not in unique_bad_lines:
-                unique_bad_lines.append(row)
         good_lines = []
         holding = ""
-        for line in unique_bad_lines:
+        for line in filtered_bad_lines:
             if line.find("…") == 0:
                 new_line = line.replace("…", ", ")
             else:
@@ -264,7 +260,6 @@ class cleaner(object):
             self._currently_processing = table['name']
 
             # Reset the log helpers
-            self.log[self._currently_processing] = []
             self.countLog[self._currently_processing] = {}
 
             # Setup the output file
@@ -292,7 +287,7 @@ class cleaner(object):
 
                 # Log any errors
                 self._handle_logged_errors(self.log[self._currently_processing], schema, clean_file_path, table['length'])
-
+                self.log[self._currently_processing] = []
         self._currently_processing = None
 
         with open('countLog.json', 'w') as logfile:
