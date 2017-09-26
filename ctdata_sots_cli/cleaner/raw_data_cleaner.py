@@ -1,7 +1,7 @@
 from os import walk, path
 from datetime import datetime, time
 import yaml
-from collections import namedtuple
+from collections import namedtuple, defaultdict
 import codecs
 import unicodecsv as ucsv
 import json
