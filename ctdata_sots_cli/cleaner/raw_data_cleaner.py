@@ -97,12 +97,12 @@ class cleaner(object):
         self.build = False
         self.log = {}
         self.countLog = {}
-        self._currentlyProcessing = None
+        self._currently_processing = None
         self.goodlines = None
 
     @property
     def currentLog(self):
-        return self.log[self._currentlyProcessing]
+        return self.log[self._currently_processing]
 
     # def loadVars(self):
     #     """Helper function for loading variables from self._scriptVarPath specified YAML file."""
@@ -184,7 +184,7 @@ class cleaner(object):
 
     def _logger(self, line):
         """Helper for writing bad lines to log."""
-        self.log[self._currentlyProcessing].append(line)
+        self.log[self._currently_processing].append(line)
 
     def writeLogs(self):
         """Function for outputting internal log to csv files named by table type."""
@@ -204,15 +204,19 @@ class cleaner(object):
             return False
 
     def _handle_logged_errors(self, bad_lines, schema, outfilename, line_length):
-        holding = ""
         filtered_bad_lines = [row for row in bad_lines if not row == '\x1a']
+        grouped_bad_lines = defaultdict(list)
+        for row in filtered_bad_lines:
+            grouped_bad_lines[row['id_bus']].append(row)
+        unique_bad_lines = [v[0] for k,v in grouped_bad_lines.items()]
         good_lines = []
         holding = ""
-        for line in filtered_bad_lines:
+        for line in unique_bad_lines:
             if line.find("…") == 0:
                 new_line = line.replace("…", ", ")
             else:
                 new_line = line.replace("\r", "")
+            print(new_line)
             holding += new_line
         if len(holding) == line_length:
             good_lines.append(holding)
@@ -221,32 +225,32 @@ class cleaner(object):
             with open(outfilename, 'ab') as csvfile:
                 tablewriter = ucsv.writer(csvfile, delimiter=',', lineterminator='\n')
                 for line in good_lines:
-                    parsedVals = [x.typeHelper(line[x.slice]) for x in schema]
+                    parsed_vals = [x.typeHelper(line[x.slice]) for x in schema]
                     id = uuid4()
-                    parsedVals.append(id)
-                    tablewriter.writerow(parsedVals)
+                    parsed_vals.append(id)
+                    tablewriter.writerow(parsed_vals)
 
-    def _loadFile(self, dataFilePath, schema, outfilename, lineLength):
+    def _load_file(self, data_file_path, schema, outfilename, lineLength):
         """Internal helper for managing the data loading process."""
         row = 0
         with open(outfilename, 'ab') as csvfile:
             tablewriter = ucsv.writer(csvfile, delimiter=',', lineterminator='\n')
             try:
-                for line in codecs.open(dataFilePath, encoding='cp1252'):
-                    if not len(line) == lineLength and not self._currentlyProcessing == 'BUS_OTHER':
+                for line in codecs.open(data_file_path, encoding='cp1252'):
+                    if not len(line) == lineLength and not self._currently_processing == 'BUS_OTHER':
                         self._logger(line)
                     elif self._check_null_pk(line, schema):
                         self._logger(line)
                     else:
-                        parsedVals = [x.typeHelper(line[x.slice]) for x in schema]
+                        parsed_vals = [x.typeHelper(line[x.slice]) for x in schema]
                         id = uuid4()
-                        parsedVals.append(id)
-                        tablewriter.writerow(parsedVals)
+                        parsed_vals.append(id)
+                        tablewriter.writerow(parsed_vals)
                     row += 1
             except UnicodeDecodeError as e:
                 print(e)
-        print("Rows for {}: {}".format(dataFilePath, row))
-        self.countLog[self._currentlyProcessing][dataFilePath] = row
+        print("Rows for {}: {}".format(data_file_path, row))
+        self.countLog[self._currently_processing][data_file_path] = row
 
 
     def clean(self):
@@ -257,15 +261,15 @@ class cleaner(object):
 
             # Set flag with current table name. This gets used by the logging function to correctly id where
             # bad rows were founds
-            self._currentlyProcessing = table['name']
+            self._currently_processing = table['name']
 
             # Reset the log helpers
-            self.log[self._currentlyProcessing] = []
-            self.countLog[self._currentlyProcessing] = {}
+            self.log[self._currently_processing] = []
+            self.countLog[self._currently_processing] = {}
 
             # Setup the output file
             outfilename = table['name'] + ".csv"
-            cleanFilePath = path.join(self.outpath,outfilename)
+            clean_file_path = path.join(self.outpath,outfilename)
 
             # Get the schema for the given table and build the list of files to process
             dataFiles = self._buildFileStruct(table)
@@ -274,22 +278,22 @@ class cleaner(object):
             # Prep and write the headers
             headers = [x.name for x in schema]
             headers.append('id')
-            with open(cleanFilePath, 'wb') as csvfile:
+            with open(clean_file_path, 'wb') as csvfile:
                 tablewriter = ucsv.writer(csvfile, delimiter=',', lineterminator='\n')
                 tablewriter.writerow(headers)
 
             # Walk the datafiles for the given table
             for data in dataFiles:
                 # Reset the log
-                self.countLog[self._currentlyProcessing][data] = []
+                self.countLog[self._currently_processing][data] = []
 
                 # Load, parse and write data for given partial data file
-                self._loadFile(data, schema, cleanFilePath, table['length'])
+                self._load_file(data, schema, clean_file_path, table['length'])
 
                 # Log any errors
-                self._handle_logged_errors(self.log[self._currentlyProcessing], schema, cleanFilePath, table['length'])
+                self._handle_logged_errors(self.log[self._currently_processing], schema, clean_file_path, table['length'])
 
-        self._currentlyProcessing = None
+        self._currently_processing = None
 
         with open('countLog.json', 'w') as logfile:
             json.dump(self.countLog, logfile)
