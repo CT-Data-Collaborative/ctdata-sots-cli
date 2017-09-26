@@ -259,6 +259,9 @@ class cleaner(object):
             # bad rows were founds
             self._currently_processing = table['name']
 
+            # Initialize log
+            self.log[self._currently_processing] = []
+
             # Reset the log helpers
             self.countLog[self._currently_processing] = {}
 
@@ -287,6 +290,7 @@ class cleaner(object):
 
                 # Log any errors
                 self._handle_logged_errors(self.log[self._currently_processing], schema, clean_file_path, table['length'])
+                # Reset log
                 self.log[self._currently_processing] = []
         self._currently_processing = None
 
