@@ -12,16 +12,26 @@ import click
 
 
 
-m_views = ['busmaster_mail_address_index', 'busmaster_name_index',
-           'name_change_oldname_index', 'principal_name_index',
+m_views = ['busmaster_mail_address_index', 
+           'busmaster_name_index',
+           'name_change_oldname_index', 
+           'principal_name_index',
+           'agent_name_index',
            'busmaster_place_of_business_address_index',
-           'bus_id_index', 'filing_number_index']
+           'busmaster_place_of_business_city_index',
+           'bus_id_index', 
+           'filing_number_index']
 
-table_mat_views = ['bus_other_join_table', 'corp_join_table', 'dom_llc_join_table', 'dom_llp_join_table',
-                   'dom_limit_p_join_table', 'for_llc_join_table', 'for_lim_part_join_table',
-                   'for_llp_join_table', 'for_stat_trust_join_table', 'gen_part_join_table']
-
-
+table_mat_views = ['bus_other_join_table', 
+                   'corp_join_table', 
+                   'dom_llc_join_table', 
+                   'dom_llp_join_table',
+                   'dom_limit_p_join_table', 
+                   'for_llc_join_table', 
+                   'for_lim_part_join_table',
+                   'for_llp_join_table', 
+                   'for_stat_trust_join_table', 
+                   'gen_part_join_table']
 
 
 # def loadSession(Base, engine):
@@ -153,16 +163,67 @@ def _join_index_material_view(engine):
 # Then we create a new table that includes a UUID lookup along with all of the selected elements from the temp_index
 # Add index and then add foreign key relationship back to bus_master
 #  For some reason, the compound query will not update correctly. Works fine in sql consle.
+#def _build_full_text_index_table(engine):
+#    with engine.connect() as con:
+#        con.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
+#        con.execute('DROP TABLE IF EXISTS full_text_index;')
+        #con.execute("CREATE TABLE full_text_index AS (SELECT uuid_generate_v4() as index_key, ti.primary_id, ti.id_bus, "
+        #    "st.nm_name, st.type, sta.status, st.dt_origin, ti.table_name, ti.index_name, ti.search_type, "
+        #    "st.address, st.street, st.city, st.state, st.zip, st.country, "
+           # "prin.principal_name, 
+         #  "prin.principal_names, "
+       #    "st.nm_agt, "                    
+       #     "ti.document "
+       #     "FROM temp_index "
+       #     "AS ti "
+       #     "JOIN (SELECT bm.id_bus, bm.nm_name, bm.dt_origin, bm.nm_agt,  "
+       #     "CASE "
+       #     "WHEN (bm.ad_city is not NULL) THEN concat_ws(' ', concat_ws(', ', bm.ad_str1, bm.ad_str2, bm.ad_str3, bm.ad_city, bm.ad_st), ad_zip5, bm.ad_cntry) "
+       #     "ELSE concat_ws(' ', concat_ws(', ', bm.ad_mail_str1, bm.ad_mail_str2, bm.ad_mail_str3, bm.ad_mail_city, bm.ad_mail_st), bm.ad_mail_zip5, bm.ad_mail_cntry) "
+       #     "END AS address, "
+       #     "CASE WHEN (bm.ad_city is not NULL) "
+       #             "THEN concat_ws(', ', bm.ad_str1, bm.ad_str2, bm.ad_str3) "
+       #             "ELSE concat_ws(', ', bm.ad_mail_str1, bm.ad_mail_str2, bm.ad_mail_str3) END AS street, "
+       #     "CASE WHEN (bm.ad_city is not NULL) THEN bm.ad_city ELSE bm.ad_mail_city END AS city, "
+       #     "CASE WHEN (bm.ad_city is not NULL) THEN bm.ad_zip5 ELSE bm.ad_mail_zip5 END AS zip, "
+       #     "CASE WHEN (bm.ad_city is not NULL) THEN bm.ad_st ELSE bm.ad_mail_st END AS state, "
+       #     "CASE WHEN (bm.ad_city is not NULL) THEN bm.ad_cntry ELSE bm.ad_mail_cntry END AS country, "
+       #     "bs.description "
+       #     "AS type "
+       #     "FROM bus_master "
+       #     "AS bm "
+       #     "JOIN business_subtype "
+       #     "AS bs "
+       #     "ON bm.cd_subtype = bs.cd_subtype) "
+       #     "AS st "
+       #     "ON ti.id_bus = st.id_bus "
+       #     "JOIN (SELECT bm.id_bus, bm.nm_agt, bstatus.description "
+       #    "AS status "
+       #     "FROM bus_master "
+       #      "AS bm "
+       #      "JOIN business_status "
+       #     "AS bstatus "
+       #     "ON bm.cd_status = bstatus.cd_status) "
+       #     "AS sta "
+       #     "ON ti.id_bus = sta.id_bus);")
+       #    "LEFT JOIN (SELECT DISTINCT id_bus, nm_name AS principal_name FROM principal) " #not all business have principals (left join), select distinct principals (no multiple titles)
+       #    "LEFT JOIN (SELECT principal.id_bus, string_agg(distinct principal.nm_name, ', ') as principal_names "
+       #    "FROM principal GROUP BY principal.id_bus) "
+       #    "AS prin "
+       #    "ON ti.id_bus = prin.id_bus);")
+
 def _build_full_text_index_table(engine):
     with engine.connect() as con:
         con.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
         con.execute('DROP TABLE IF EXISTS full_text_index;')
         con.execute("CREATE TABLE full_text_index AS (SELECT uuid_generate_v4() as index_key, ti.primary_id, ti.id_bus, "
             "st.nm_name, st.type, sta.status, st.dt_origin, ti.table_name, ti.index_name, ti.search_type, "
-            "st.address, st.street, st.city, st.state, st.zip, st.country, ti.document "
+            "st.address, st.street, st.city, st.state, st.zip, st.country, ti.document, "
+            #adding principal name and agent name to table
+            "prin.principal_name, st.nm_agt  " 
             "FROM temp_index "
             "AS ti "
-            "JOIN (SELECT bm.id_bus, bm.nm_name, bm.dt_origin, "
+            "JOIN (SELECT bm.id_bus, bm.nm_name, bm.dt_origin, bm.nm_agt, "
             "CASE "
             "WHEN (bm.ad_city is not NULL) THEN concat_ws(' ', concat_ws(', ', bm.ad_str1, bm.ad_str2, bm.ad_str3, bm.ad_city, bm.ad_st), ad_zip5, bm.ad_cntry) "
             "ELSE concat_ws(' ', concat_ws(', ', bm.ad_mail_str1, bm.ad_mail_str2, bm.ad_mail_str3, bm.ad_mail_city, bm.ad_mail_st), bm.ad_mail_zip5, bm.ad_mail_cntry) "
@@ -191,7 +252,13 @@ def _build_full_text_index_table(engine):
             "AS bstatus "
             "ON bm.cd_status = bstatus.cd_status) "
             "AS sta "
-            "ON ti.id_bus = sta.id_bus);")
+            "ON ti.id_bus = sta.id_bus "
+            #adding principal name to table
+            "LEFT JOIN (SELECT DISTINCT id_bus, nm_name AS principal_name FROM principal " #not all business have principals (left join), select distinct principals (no multiple titles)
+            "GROUP BY id_bus, nm_name) "
+            "AS prin "
+            "ON ti.id_bus = prin.id_bus);")
+
 
 
 # Finally we add in the index on the ts_vector column and indicate
@@ -268,29 +335,75 @@ def build_index(engine):
     class ForStatTrust(SOTSMixin, Base):
         pass
 
+    # --------------------------------------------------------------------------------------
+    # Business Status
+    # --------------------------------------------------------------------------------------
     class BusinessStatus(Base):
         __tablename__ = 'business_status'
         cd_status = Column(String, primary_key=True)
         description = Column(String)
 
+    # --------------------------------------------------------------------------------------
+    # Business Subtype
+    # --------------------------------------------------------------------------------------
     class BusinessSubtype(Base):
         __tablename__ = 'business_subtype'
         cd_subtype = Column(String, primary_key=True)
         description = Column(String)
 
+    # --------------------------------------------------------------------------------------
+    # Principal Name
+    # --------------------------------------------------------------------------------------
     class PrincipalNameIndex(Base):
         __table__ = create_mat_view(
             Base.metadata,
             "principal_name_index",
             select([
-                Principal.primary_id, Principal.id_bus,
+                Principal.primary_id, Principal.id_bus, 
                 cast('principal', String).label('table_name'),
                 cast('principal_name', String).label('index_name'),
-                cast('name', String).label('search_type'),
+                cast('principal_name', String).label('search_type'),
                 func.to_tsvector(Principal.nm_name).label('document')
             ])
         )
 
+      #  subquery = session.query(Apartments.id).filter(Apartments.postcode==2000).subquery()
+       # query = session.query(Residents).filter(Residents.apartment_id.in_(subquery))
+
+        
+    #       select([ 
+    #           Principal.primary_id, 
+    #           Principal.id_bus, 
+    #           Principal.nm_name, 
+    #           func.row_number().over(partition_by=Principal.nm_name.label('row'))
+
+    #   ) as  q1 WHERE row = 1
+
+    #   
+   #     func.row_number().over(partition_by=Principal.nm_name.label('row'))
+   # query = self.session.query(Foo)
+   # query = query.filter(Foo.time_key <= time_key)
+   # query = query.add_column(row_number_column)
+    #query = query.from_self().filter(row_number_column == 1)
+        
+    # --------------------------------------------------------------------------------------
+    # Agent Name
+    # --------------------------------------------------------------------------------------
+    class AgentNameIndex(Base):
+        __table__ = create_mat_view(
+            Base.metadata,
+            "agent_name_index",
+            select([
+                BusMaster.primary_id, BusMaster.id_bus,
+                cast('bus_master', String).label('table_name'),
+                cast('agent_name', String).label('index_name'),
+                cast('agent_name', String).label('search_type'),
+                func.to_tsvector(BusMaster.nm_agt).label('document')
+            ])
+        )
+    # --------------------------------------------------------------------------------------
+    # Business Mailing Address
+    # --------------------------------------------------------------------------------------
     class BusMasterMailAddressIndex(Base):
         __table__ = create_mat_view(
             Base.metadata,
@@ -307,6 +420,9 @@ def build_index(engine):
             ])
         )
 
+    # --------------------------------------------------------------------------------------
+    # Place of Business Address
+    # --------------------------------------------------------------------------------------
     class BusMasterPlaceaOfBusinessAddressIndex(Base):
         __table__ = create_mat_view(
             Base.metadata,
@@ -319,6 +435,22 @@ def build_index(engine):
                 func.to_tsvector(func.CONCAT_WS(' ', BusMaster.ad_str1, BusMaster.ad_str2, BusMaster.ad_str3,
                                                 BusMaster.ad_city, BusMaster.ad_st,
                                                 BusMaster.ad_zip5, BusMaster.ad_cntry)).label('document')
+            ])
+        )
+
+    # --------------------------------------------------------------------------------------
+    # Place of Business City
+    # --------------------------------------------------------------------------------------
+    class BusMasterPlaceaOfBusinessCityIndex(Base):
+        __table__ = create_mat_view(
+            Base.metadata,
+            'busmaster_place_of_business_city_index',
+            select([
+                BusMaster.primary_id, BusMaster.id_bus,
+                cast('bus_master', String).label('table_name'),
+                cast('place_of_business_city', String).label('index_name'),
+                cast('city', String).label('search_type'),
+                func.to_tsvector(BusMaster.ad_city).label('document')
             ])
         )
 

@@ -1,7 +1,7 @@
 from psycopg2 import connect
 
 STARTS_QUERY = """
-SELECT bus_filing.cd_trans_type, bus_filing.dt_effect,
+SELECT bus_filing.cd_trans_type, bus_filing.dt_effect, 
   CASE 
     WHEN bus_filing.cd_trans_type = 'LC'    THEN 'Domestic Limited Liability Company'   	 
     WHEN bus_filing.cd_trans_type = 'CIS'   THEN 'Domestic Stock Corporation'	           
@@ -19,25 +19,24 @@ SELECT bus_filing.cd_trans_type, bus_filing.dt_effect,
     ELSE 'No' END AS ENTITY_TYPE, 
     bus_master.nm_name, 
     date_part('year', dt_effect) AS year_effect, 
-    date_part('month', dt_effect) AS month_effect
+    date_part('month', dt_effect) AS month_effect  
 FROM bus_filing
 JOIN bus_master ON bus_filing.id_bus = bus_master.id_bus
 WHERE 
-  cd_trans_type IN ('LC', 'CIS', 'CIN', 'LLP', 'LP', 'ST', 'BCORP', 'LCF', 'CFAS', 'CFAN', 'LLPF', 'LLPF', 'STF') --formations
-  AND bus_filing.dt_effect >= DATE('1980-01-01')
+  cd_trans_type IN ('LC', 'CIS', 'CIN', 'LLP', 'LP', 'ST', 'BCORP', 'LCF', 'CFAS', 'CFAN', 'LLPF', 'LPF', 'STF') --formations
 ORDER BY 
   dt_effect DESC
 """
 
 STOPS_QUERY = """
-SELECT bus_filing.cd_trans_type, bus_filing.dt_effect,
+SELECT bus_filing.cd_trans_type, bus_filing.dt_effect, 
   CASE 
-    WHEN bus_filing.cd_trans_type = 'LCD'   THEN 'Domestic Limited Liability Company'   	 
-    WHEN bus_filing.cd_trans_type = 'CDRS'  THEN 'Domestic Stock Corporation'	           
-    WHEN bus_filing.cd_trans_type = 'CDRN'  THEN 'Domestic Non-Stock Corporation'	       
+    WHEN bus_filing.cd_trans_type = 'LCD'   THEN 'Domestic Limited Liability Company'   
+    WHEN bus_filing.cd_trans_type = 'CDRS'  THEN 'Domestic Stock Corporation'     
+    WHEN bus_filing.cd_trans_type = 'CDRN'  THEN 'Domestic Non-Stock Corporation'
     WHEN bus_filing.cd_trans_type = 'LLPR'  THEN 'Domestic Limited Liability Partnership'
-    WHEN bus_filing.cd_trans_type = 'LPC'   THEN 'Domestic Limited Partnership'	         
-    WHEN bus_filing.cd_trans_type = 'STC'   THEN 'Domestic Statutory Trust'	             
+    WHEN bus_filing.cd_trans_type = 'LPC'   THEN 'Domestic Limited Partnership'
+    WHEN bus_filing.cd_trans_type = 'STC'   THEN 'Domestic Statutory Trust'
     WHEN bus_filing.cd_trans_type = 'LCFC'  THEN 'Foreign Limited Liability Company'      
     WHEN bus_filing.cd_trans_type = 'CFWS'  THEN 'Foreign Stock Corporation'              
     WHEN bus_filing.cd_trans_type = 'CFWN'  THEN 'Foreign Non-Stock Corporation'          
@@ -47,15 +46,13 @@ SELECT bus_filing.cd_trans_type, bus_filing.dt_effect,
     ELSE 'No' END AS ENTITY_TYPE, 
     bus_master.nm_name, 
     date_part('year', dt_effect) AS year_effect, 
-    date_part('month', dt_effect) AS month_effect
+    date_part('month', dt_effect) AS month_effect    
 FROM bus_filing
 JOIN bus_master ON bus_filing.id_bus = bus_master.id_bus
 WHERE 
   cd_trans_type IN ('LCD', 'CDRS', 'CDRN', 'LLPR', 'LPC', 'STC', 'LCFC', 'CFWS', 'CFWN', 'LLPFW', 'LPFC', 'STFC') --dissolutions
-  AND bus_filing.dt_effect >= DATE('1980-01-01')
 ORDER BY 
   dt_effect DESC
-
 """
 
 ADDRESS_CHANGE_QUERY = """
