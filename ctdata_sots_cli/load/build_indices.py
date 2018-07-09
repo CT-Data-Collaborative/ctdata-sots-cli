@@ -4,6 +4,10 @@ from sqlalchemy.event import listen, listens_for
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.ext import compiler
 from sqlalchemy.schema import DDLElement
+#from sqlalchemy.sql.expression import ColumnElement, _literal_as_column
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+#from lib import project_config
 import click
 # from sqlalchemy import cast, text, Table, MetaData, Column, Integer, String, Float, Numeric, Date
 # from sqlalchemy import Time, TIMESTAMP, Boolean, ForeignKey, select, func, and_, DDL, Index
@@ -124,9 +128,6 @@ def create_mat_view(metadata, name, selectable):
     )
     return t
 
-
-
-
 def join_supplemental_tables(engine):
     failed = []
     with engine.connect() as con:
@@ -163,57 +164,28 @@ def _join_index_material_view(engine):
 # Then we create a new table that includes a UUID lookup along with all of the selected elements from the temp_index
 # Add index and then add foreign key relationship back to bus_master
 #  For some reason, the compound query will not update correctly. Works fine in sql consle.
-#def _build_full_text_index_table(engine):
-#    with engine.connect() as con:
-#        con.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
-#        con.execute('DROP TABLE IF EXISTS full_text_index;')
-        #con.execute("CREATE TABLE full_text_index AS (SELECT uuid_generate_v4() as index_key, ti.primary_id, ti.id_bus, "
-        #    "st.nm_name, st.type, sta.status, st.dt_origin, ti.table_name, ti.index_name, ti.search_type, "
-        #    "st.address, st.street, st.city, st.state, st.zip, st.country, "
-           # "prin.principal_name, 
-         #  "prin.principal_names, "
-       #    "st.nm_agt, "                    
-       #     "ti.document "
-       #     "FROM temp_index "
-       #     "AS ti "
-       #     "JOIN (SELECT bm.id_bus, bm.nm_name, bm.dt_origin, bm.nm_agt,  "
-       #     "CASE "
-       #     "WHEN (bm.ad_city is not NULL) THEN concat_ws(' ', concat_ws(', ', bm.ad_str1, bm.ad_str2, bm.ad_str3, bm.ad_city, bm.ad_st), ad_zip5, bm.ad_cntry) "
-       #     "ELSE concat_ws(' ', concat_ws(', ', bm.ad_mail_str1, bm.ad_mail_str2, bm.ad_mail_str3, bm.ad_mail_city, bm.ad_mail_st), bm.ad_mail_zip5, bm.ad_mail_cntry) "
-       #     "END AS address, "
-       #     "CASE WHEN (bm.ad_city is not NULL) "
-       #             "THEN concat_ws(', ', bm.ad_str1, bm.ad_str2, bm.ad_str3) "
-       #             "ELSE concat_ws(', ', bm.ad_mail_str1, bm.ad_mail_str2, bm.ad_mail_str3) END AS street, "
-       #     "CASE WHEN (bm.ad_city is not NULL) THEN bm.ad_city ELSE bm.ad_mail_city END AS city, "
-       #     "CASE WHEN (bm.ad_city is not NULL) THEN bm.ad_zip5 ELSE bm.ad_mail_zip5 END AS zip, "
-       #     "CASE WHEN (bm.ad_city is not NULL) THEN bm.ad_st ELSE bm.ad_mail_st END AS state, "
-       #     "CASE WHEN (bm.ad_city is not NULL) THEN bm.ad_cntry ELSE bm.ad_mail_cntry END AS country, "
-       #     "bs.description "
-       #     "AS type "
-       #     "FROM bus_master "
-       #     "AS bm "
-       #     "JOIN business_subtype "
-       #     "AS bs "
-       #     "ON bm.cd_subtype = bs.cd_subtype) "
-       #     "AS st "
-       #     "ON ti.id_bus = st.id_bus "
-       #     "JOIN (SELECT bm.id_bus, bm.nm_agt, bstatus.description "
-       #    "AS status "
-       #     "FROM bus_master "
-       #      "AS bm "
-       #      "JOIN business_status "
-       #     "AS bstatus "
-       #     "ON bm.cd_status = bstatus.cd_status) "
-       #     "AS sta "
-       #     "ON ti.id_bus = sta.id_bus);")
-       #    "LEFT JOIN (SELECT DISTINCT id_bus, nm_name AS principal_name FROM principal) " #not all business have principals (left join), select distinct principals (no multiple titles)
-       #    "LEFT JOIN (SELECT principal.id_bus, string_agg(distinct principal.nm_name, ', ') as principal_names "
-       #    "FROM principal GROUP BY principal.id_bus) "
-       #    "AS prin "
-       #    "ON ti.id_bus = prin.id_bus);")
-
 def _build_full_text_index_table(engine):
     with engine.connect() as con:
+        con.execute('DROP TABLE IF EXISTS principalname;')
+        con.execute("CREATE TABLE principalname as (SELECT primary_id, q2.id_bus, principal_name "
+            "FROM ( "
+                "SELECT id_bus, string_agg(nm_name, ', ') AS principal_name FROM "
+                    "(SELECT DISTINCT id_bus, nm_name, "
+                    "ROW_NUMBER() OVER(PARTITION BY nm_name ORDER BY id_bus) as name_index "
+                    "FROM principal "
+                    "ORDER BY id_bus) as q1 "
+                "WHERE q1.name_index = 1 "
+                "GROUP BY id_bus "
+            ") as q2 "
+            "LEFT JOIN ( "
+                "SELECT primary_id, id_bus FROM ( "
+                    "SELECT primary_id, id_bus, "
+                    "ROW_NUMBER() OVER(PARTITION BY id_bus ORDER BY primary_id) as id_index FROM principal "
+                ") as q3 "
+                "WHERE q3.id_index = 1 "
+            ") as q4 "
+            "on q2.id_bus = q4.id_bus);")
+
         con.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
         con.execute('DROP TABLE IF EXISTS full_text_index;')
         con.execute("CREATE TABLE full_text_index AS (SELECT uuid_generate_v4() as index_key, ti.primary_id, ti.id_bus, "
@@ -254,11 +226,11 @@ def _build_full_text_index_table(engine):
             "AS sta "
             "ON ti.id_bus = sta.id_bus "
             #adding principal name to table
-            "LEFT JOIN (SELECT DISTINCT id_bus, nm_name AS principal_name FROM principal " #not all business have principals (left join), select distinct principals (no multiple titles)
-            "GROUP BY id_bus, nm_name) "
+            "LEFT JOIN (SELECT DISTINCT id_bus, principal_name FROM principalname " #not all business have principals (left join), select distinct principals (no multiple titles)
+            "GROUP BY id_bus, principal_name) "
             "AS prin "
             "ON ti.id_bus = prin.id_bus);")
-
+        
 
 
 # Finally we add in the index on the ts_vector column and indicate
@@ -270,6 +242,7 @@ def _build_table_indices(engine):
 
 def _bus_filing_index(engine):
     with engine.connect() as con:
+        con.execute('DROP INDEX IF EXISTS filing_index;')
         con.execute('CREATE INDEX filing_index ON public.bus_filing USING btree(id_bus, cd_trans_type);')
 
 def _final_cleanup(engine):
@@ -354,10 +327,12 @@ def build_index(engine):
     # --------------------------------------------------------------------------------------
     # Principal Name
     # --------------------------------------------------------------------------------------
+
     class PrincipalNameIndex(Base):
         __table__ = create_mat_view(
             Base.metadata,
             "principal_name_index",
+            
             select([
                 Principal.primary_id, Principal.id_bus, 
                 cast('principal', String).label('table_name'),
@@ -366,25 +341,6 @@ def build_index(engine):
                 func.to_tsvector(Principal.nm_name).label('document')
             ])
         )
-
-      #  subquery = session.query(Apartments.id).filter(Apartments.postcode==2000).subquery()
-       # query = session.query(Residents).filter(Residents.apartment_id.in_(subquery))
-
-        
-    #       select([ 
-    #           Principal.primary_id, 
-    #           Principal.id_bus, 
-    #           Principal.nm_name, 
-    #           func.row_number().over(partition_by=Principal.nm_name.label('row'))
-
-    #   ) as  q1 WHERE row = 1
-
-    #   
-   #     func.row_number().over(partition_by=Principal.nm_name.label('row'))
-   # query = self.session.query(Foo)
-   # query = query.filter(Foo.time_key <= time_key)
-   # query = query.add_column(row_number_column)
-    #query = query.from_self().filter(row_number_column == 1)
         
     # --------------------------------------------------------------------------------------
     # Agent Name
