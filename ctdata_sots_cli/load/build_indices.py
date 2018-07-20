@@ -13,9 +13,6 @@ import click
 # from sqlalchemy import Time, TIMESTAMP, Boolean, ForeignKey, select, func, and_, DDL, Index
 # from sqlalchemy.orm import mapper, relationship, sessionmaker, Session
 
-
-
-
 m_views = ['busmaster_mail_address_index', 
            'busmaster_name_index',
            'name_change_oldname_index', 
@@ -161,17 +158,15 @@ def _join_index_material_view(engine):
     return failed
 
 
-# Then we create a new table that includes a UUID lookup along with all of the selected elements from the temp_index
-# Add index and then add foreign key relationship back to bus_master
-#  For some reason, the compound query will not update correctly. Works fine in sql consle.
-def _build_full_text_index_table(engine):
+def _build_supp_tables(engine):
     with engine.connect() as con:
+        #principalname        
         con.execute('DROP TABLE IF EXISTS principalname;')
         con.execute("CREATE TABLE principalname as (SELECT primary_id, q2.id_bus, principal_name "
             "FROM ( "
                 "SELECT id_bus, string_agg(nm_name, ', ') AS principal_name FROM "
                     "(SELECT DISTINCT id_bus, nm_name, "
-                    "ROW_NUMBER() OVER(PARTITION BY nm_name ORDER BY id_bus) as name_index "
+                    "ROW_NUMBER() OVER(PARTITION BY id_bus, nm_name ORDER BY id_bus) as name_index " #some principals are principals for more than one business
                     "FROM principal "
                     "ORDER BY id_bus) as q1 "
                 "WHERE q1.name_index = 1 "
@@ -185,14 +180,30 @@ def _build_full_text_index_table(engine):
                 "WHERE q3.id_index = 1 "
             ") as q4 "
             "on q2.id_bus = q4.id_bus);")
-
+        #filing date
+        con.execute('DROP TABLE IF EXISTS filingdate;')
+        con.execute("CREATE TABLE filingdate as (SELECT id_bus, dt_filing "
+            "FROM bus_filing "
+            "JOIN tx_codes "
+            "on bus_filing.cd_trans_type = tx_codes.cd_trans_type "  
+            "WHERE tx_codes.label ilike '%%formation%%' "
+            "ORDER BY id_bus, dt_filing);")        
+              
+        
+# Then we create a new table that includes a UUID lookup along with all of the selected elements from the temp_index
+# Add index and then add foreign key relationship back to bus_master
+#  For some reason, the compound query will not update correctly. Works fine in sql consle.
+def _build_full_text_index_table(engine):
+    with engine.connect() as con:
         con.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
         con.execute('DROP TABLE IF EXISTS full_text_index;')
         con.execute("CREATE TABLE full_text_index AS (SELECT uuid_generate_v4() as index_key, ti.primary_id, ti.id_bus, "
             "st.nm_name, st.type, sta.status, st.dt_origin, ti.table_name, ti.index_name, ti.search_type, "
             "st.address, st.street, st.city, st.state, st.zip, st.country, ti.document, "
             #adding principal name and agent name to table
-            "prin.principal_name, st.nm_agt  " 
+            "prin.principal_name, st.nm_agt ,  "
+            #adding filing date 
+            "fl.dt_filing "
             "FROM temp_index "
             "AS ti "
             "JOIN (SELECT bm.id_bus, bm.nm_name, bm.dt_origin, bm.nm_agt, "
@@ -229,10 +240,13 @@ def _build_full_text_index_table(engine):
             "LEFT JOIN (SELECT DISTINCT id_bus, principal_name FROM principalname " #not all business have principals (left join), select distinct principals (no multiple titles)
             "GROUP BY id_bus, principal_name) "
             "AS prin "
-            "ON ti.id_bus = prin.id_bus);")
+            "ON ti.id_bus = prin.id_bus "
+            #adding filing date to table
+            "LEFT JOIN (SELECT * FROM filingdate) "
+            "AS fl "
+            "ON ti.id_bus = fl.id_bus "
+            ");")
         
-
-
 # Finally we add in the index on the ts_vector column and indicate
 def _build_table_indices(engine):
     with engine.connect() as con:
@@ -332,14 +346,13 @@ def build_index(engine):
         __table__ = create_mat_view(
             Base.metadata,
             "principal_name_index",
-            
-            select([
-                Principal.primary_id, Principal.id_bus, 
-                cast('principal', String).label('table_name'),
-                cast('principal_name', String).label('index_name'),
-                cast('principal_name', String).label('search_type'),
-                func.to_tsvector(Principal.nm_name).label('document')
-            ])
+           select([
+               Principal.primary_id, Principal.id_bus, 
+               cast('principal', String).label('table_name'),
+               cast('principal_name', String).label('index_name'),
+               cast('principal_name', String).label('search_type'),
+               func.to_tsvector(Principal.nm_name).label('document')
+           ])          
         )
         
     # --------------------------------------------------------------------------------------
@@ -473,6 +486,8 @@ def build_index(engine):
                 func.to_tsvector(BusMaster.id_bus).label('document')
             ])
         )
+        
+
 
     click.echo("Prep cleanup")
     cleanup_table_mat_views(engine)
@@ -484,7 +499,10 @@ def build_index(engine):
 
     click.echo("Joining Material Views")
     _join_index_material_view(engine)
-
+    
+    click.echo("Building Supplemental Tables")
+    _build_supp_tables(engine)
+    
     click.echo("Building Full Text Index")
     _build_full_text_index_table(engine)
 
