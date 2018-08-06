@@ -50,6 +50,54 @@ following order:
 6. loaddb
 7. extract_formations
 
+1) Unzip monthlies folders from FTP server, run: (approx 2 min)
+
+::
+
+    sots unzip --zipdir monthlies/07_20_2018/
+
+2) Clean text files using individual schema files for each table to create csv files (approx 15 minutes)
+
+::
+
+    sots clean --indir monthlies/07_20_2018/ --outdir clean/07_2018 ../sots-db-schema
+
+3) Data base prep, preps the Postgres server (creates the tables) on the docker-environment for the data to be loaded in (if tables/indices/views already exist, they are dropped and created again) (approx 15min)
+
+::
+
+    sots prepdb --dbhost 0.0.0.0 --dbport 15432 --dbuser sots --dbpass [password] --data clean/07_2018 ../sots-db-schema
+
+--dbhost 0.0.0.0 (hosts the application on your local machine at your localhost)
+--dbport 5432 (port at which the postgres server listens on the docker container)
+--dbuser sots (server configuration, set in the dev.env file)
+--dbpass [password] (server password, set in the dev.env file)
+--data [link to data] (points to where the .csvs live)
+[link to schema directory] (.yml files for sots db schema) 
+
+If you have another non-docker related postgres service running on the 5432 port, you may update the port configuration in the dev.yml file to connect to 15432:5432, This will bypass the 5432 port on your local machine and only required for local deployment (i.e. would not be needed in the docker-compose.yml file)
+
+4) Drop supplemental tables
+
+::
+
+    sots drop_supplemental --dbhost 0.0.0.0 --dbport 15432 --dbuser sots --dbpass [password]
+
+5) Recreate supplemental tables
+
+::
+
+    sots add_supplemental --dbhost 0.0.0.0 --dbport 15432 --dbuser sots --dbpass  [password]
+
+6) Load the database into the postgres db
+
+::
+
+    sots loaddb --dbhost 0.0.0.0 --dbport 15432 --dbuser sots --dbpass [password] --data clean/07_2018 ../sots-db-schema
+
+
+
+-----
 ::
 
      $ sots --dbbame postgres --host 52.123.44.23
