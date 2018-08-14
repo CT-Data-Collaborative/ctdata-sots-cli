@@ -180,6 +180,7 @@ def _build_supp_tables(engine):
                 "WHERE q3.id_index = 1 "
             ") as q4 "
             "on q2.id_bus = q4.id_bus);")
+        con.execute("ALTER TABLE principalname ADD PRIMARY KEY (primary_id);")
         #filing date
         con.execute('DROP TABLE IF EXISTS filingdate;')
         con.execute("CREATE TABLE filingdate as (SELECT id_bus, dt_filing "
@@ -242,7 +243,7 @@ def _build_full_text_index_table(engine):
             "AS prin "
             "ON ti.id_bus = prin.id_bus "
             #adding filing date to table
-            "LEFT JOIN (SELECT * FROM filingdate) "
+            "LEFT JOIN (SELECT id_bus, dt_filing FROM filingdate) "
             "AS fl "
             "ON ti.id_bus = fl.id_bus "
             ");")
