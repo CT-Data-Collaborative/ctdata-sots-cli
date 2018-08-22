@@ -157,7 +157,6 @@ def _join_index_material_view(engine):
     print(failed)
     return failed
 
-
 def _build_supp_tables(engine):
     with engine.connect() as con:
         #principalname        
@@ -183,14 +182,33 @@ def _build_supp_tables(engine):
         con.execute("ALTER TABLE principalname ADD PRIMARY KEY (primary_id);")
         #filing date
         con.execute('DROP TABLE IF EXISTS filingdate;')
-        con.execute("CREATE TABLE filingdate as (SELECT id_bus, dt_filing "
+        con.execute("CREATE TABLE filingdate as (SELECT id_bus, dt_filing, to_char(dt_filing, 'MM/dd/yyyy') as dt_filing2 "
             "FROM bus_filing "
             "JOIN tx_codes "
             "on bus_filing.cd_trans_type = tx_codes.cd_trans_type "  
             "WHERE tx_codes.label ilike '%%formation%%' "
             "ORDER BY id_bus, dt_filing);")        
-              
-        
+        #filing details
+        con.execute("DROP TABLE IF EXISTS filingdetails;")
+        con.execute("CREATE TABLE filingdetails as ( "
+            "SELECT DISTINCT ROW_NUMBER() OVER(ORDER BY dt_filing) as id_index,  "
+            "id_bus, dt_filing, to_char(dt_filing, 'MM/dd/yyyy') as dt_filing2, bus_filing.id_bus_flng, tx_certif, "
+            "coalesce(volume_type, 'No data') as volume_type, "
+            "coalesce(volume_number, 'No data') as volume_number, "
+            "coalesce(start_page, 'No data') as start_page, "
+            "coalesce(pages, 'No data') as pages "
+            "FROM bus_filing "
+            "INNER JOIN ( "
+            "SELECT DISTINCT id_bus_flng, volume_type, volume_number, start_page, pages "
+            "FROM filmindx) as sq1 "
+            "ON bus_filing.id_bus_flng = sq1.id_bus_flng);")
+        con.execute("ALTER TABLE filingdetails ADD PRIMARY KEY (id_index);")
+    
+def _alter_tables(engine):
+    with engine.connect() as con:
+        con.execute("ALTER TABLE bus_filing ADD dt_filing2 text;")
+        con.execute("UPDATE bus_filing SET dt_filing2 = to_char(dt_filing, 'MM/dd/YYYY');")
+
 # Then we create a new table that includes a UUID lookup along with all of the selected elements from the temp_index
 # Add index and then add foreign key relationship back to bus_master
 #  For some reason, the compound query will not update correctly. Works fine in sql consle.
@@ -204,7 +222,7 @@ def _build_full_text_index_table(engine):
             #adding principal name and agent name to table
             "prin.principal_name, st.nm_agt ,  "
             #adding filing date 
-            "fl.dt_filing "
+            "fl.dt_filing, fl.dt_filing2 "
             "FROM temp_index "
             "AS ti "
             "JOIN (SELECT bm.id_bus, bm.nm_name, bm.dt_origin, bm.nm_agt, "
@@ -243,7 +261,7 @@ def _build_full_text_index_table(engine):
             "AS prin "
             "ON ti.id_bus = prin.id_bus "
             #adding filing date to table
-            "LEFT JOIN (SELECT id_bus, dt_filing FROM filingdate) "
+            "LEFT JOIN (SELECT id_bus, dt_filing, dt_filing2 FROM filingdate) "
             "AS fl "
             "ON ti.id_bus = fl.id_bus "
             ");")
@@ -488,8 +506,6 @@ def build_index(engine):
             ])
         )
         
-
-
     click.echo("Prep cleanup")
     cleanup_table_mat_views(engine)
     cleanup_index_tables(engine)
@@ -497,12 +513,15 @@ def build_index(engine):
 
     click.echo("Creating declared models")
     Base.metadata.create_all(engine)
+    
+    click.echo("Building Supplemental Tables")
+    _build_supp_tables(engine)
 
     click.echo("Joining Material Views")
     _join_index_material_view(engine)
     
-    click.echo("Building Supplemental Tables")
-    _build_supp_tables(engine)
+    click.echo("Altering Tables")
+    _alter_tables(engine)
     
     click.echo("Building Full Text Index")
     _build_full_text_index_table(engine)
