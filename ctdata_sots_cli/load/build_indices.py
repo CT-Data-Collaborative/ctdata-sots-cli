@@ -4,24 +4,35 @@ from sqlalchemy.event import listen, listens_for
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.ext import compiler
 from sqlalchemy.schema import DDLElement
+#from sqlalchemy.sql.expression import ColumnElement, _literal_as_column
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+#from lib import project_config
 import click
 # from sqlalchemy import cast, text, Table, MetaData, Column, Integer, String, Float, Numeric, Date
 # from sqlalchemy import Time, TIMESTAMP, Boolean, ForeignKey, select, func, and_, DDL, Index
 # from sqlalchemy.orm import mapper, relationship, sessionmaker, Session
 
-
-
-
-m_views = ['busmaster_mail_address_index', 'busmaster_name_index',
-           'name_change_oldname_index', 'principal_name_index',
+m_views = ['busmaster_mail_address_index', 
+           'busmaster_name_index',
+           'name_change_oldname_index', 
+           'principal_name_index',
+           'agent_name_index',
            'busmaster_place_of_business_address_index',
-           'bus_id_index', 'filing_number_index']
+           'busmaster_place_of_business_city_index',
+           'bus_id_index', 
+           'filing_number_index']
 
-table_mat_views = ['bus_other_join_table', 'corp_join_table', 'dom_llc_join_table', 'dom_llp_join_table',
-                   'dom_limit_p_join_table', 'for_llc_join_table', 'for_lim_part_join_table',
-                   'for_llp_join_table', 'for_stat_trust_join_table', 'gen_part_join_table']
-
-
+table_mat_views = ['bus_other_join_table', 
+                   'corp_join_table', 
+                   'dom_llc_join_table', 
+                   'dom_llp_join_table',
+                   'dom_limit_p_join_table', 
+                   'for_llc_join_table', 
+                   'for_lim_part_join_table',
+                   'for_llp_join_table', 
+                   'for_stat_trust_join_table', 
+                   'gen_part_join_table']
 
 
 # def loadSession(Base, engine):
@@ -114,9 +125,6 @@ def create_mat_view(metadata, name, selectable):
     )
     return t
 
-
-
-
 def join_supplemental_tables(engine):
     failed = []
     with engine.connect() as con:
@@ -149,6 +157,57 @@ def _join_index_material_view(engine):
     print(failed)
     return failed
 
+def _build_supp_tables(engine):
+    with engine.connect() as con:
+        #principalname        
+        con.execute('DROP TABLE IF EXISTS principalname;')
+        con.execute("CREATE TABLE principalname as (SELECT primary_id, q2.id_bus, principal_name "
+            "FROM ( "
+                "SELECT id_bus, string_agg(nm_name, ', ') AS principal_name FROM "
+                    "(SELECT DISTINCT id_bus, nm_name, "
+                    "ROW_NUMBER() OVER(PARTITION BY id_bus, nm_name ORDER BY id_bus) as name_index " #some principals are principals for more than one business
+                    "FROM principal "
+                    "ORDER BY id_bus) as q1 "
+                "WHERE q1.name_index = 1 "
+                "GROUP BY id_bus "
+            ") as q2 "
+            "LEFT JOIN ( "
+                "SELECT primary_id, id_bus FROM ( "
+                    "SELECT primary_id, id_bus, "
+                    "ROW_NUMBER() OVER(PARTITION BY id_bus ORDER BY primary_id) as id_index FROM principal "
+                ") as q3 "
+                "WHERE q3.id_index = 1 "
+            ") as q4 "
+            "on q2.id_bus = q4.id_bus);")
+        con.execute("ALTER TABLE principalname ADD PRIMARY KEY (primary_id);")
+        #filing date
+        con.execute('DROP TABLE IF EXISTS filingdate;')
+        con.execute("CREATE TABLE filingdate as (SELECT id_bus, dt_filing, to_char(dt_filing, 'MM/dd/yyyy') as dt_filing2 "
+            "FROM bus_filing "
+            "JOIN tx_codes "
+            "on bus_filing.cd_trans_type = tx_codes.cd_trans_type "  
+            "WHERE tx_codes.label ilike '%%formation%%' "
+            "ORDER BY id_bus, dt_filing);")        
+        #filing details
+        con.execute("DROP TABLE IF EXISTS filingdetails;")
+        con.execute("CREATE TABLE filingdetails as ( "
+            "SELECT DISTINCT ROW_NUMBER() OVER(ORDER BY dt_filing) as id_index,  "
+            "id_bus, dt_filing, to_char(dt_filing, 'MM/dd/yyyy') as dt_filing2, bus_filing.id_bus_flng, tx_certif, "
+            "coalesce(volume_type, 'No data') as volume_type, "
+            "coalesce(volume_number, 'No data') as volume_number, "
+            "coalesce(start_page, 'No data') as start_page, "
+            "coalesce(pages, 'No data') as pages "
+            "FROM bus_filing "
+            "INNER JOIN ( "
+            "SELECT DISTINCT id_bus_flng, volume_type, volume_number, start_page, pages "
+            "FROM filmindx) as sq1 "
+            "ON bus_filing.id_bus_flng = sq1.id_bus_flng);")
+        con.execute("ALTER TABLE filingdetails ADD PRIMARY KEY (id_index);")
+    
+def _alter_tables(engine):
+    with engine.connect() as con:
+        con.execute("ALTER TABLE bus_filing ADD dt_filing2 text;")
+        con.execute("UPDATE bus_filing SET dt_filing2 = to_char(dt_filing, 'MM/dd/YYYY');")
 
 # Then we create a new table that includes a UUID lookup along with all of the selected elements from the temp_index
 # Add index and then add foreign key relationship back to bus_master
@@ -159,10 +218,14 @@ def _build_full_text_index_table(engine):
         con.execute('DROP TABLE IF EXISTS full_text_index;')
         con.execute("CREATE TABLE full_text_index AS (SELECT uuid_generate_v4() as index_key, ti.primary_id, ti.id_bus, "
             "st.nm_name, st.type, sta.status, st.dt_origin, ti.table_name, ti.index_name, ti.search_type, "
-            "st.address, st.street, st.city, st.state, st.zip, st.country, ti.document "
+            "st.address, st.street, st.city, st.state, st.zip, st.country, ti.document, "
+            #adding principal name and agent name to table
+            "prin.principal_name, st.nm_agt ,  "
+            #adding filing date 
+            "fl.dt_filing, fl.dt_filing2 "
             "FROM temp_index "
             "AS ti "
-            "JOIN (SELECT bm.id_bus, bm.nm_name, bm.dt_origin, "
+            "JOIN (SELECT bm.id_bus, bm.nm_name, bm.dt_origin, bm.nm_agt, "
             "CASE "
             "WHEN (bm.ad_city is not NULL) THEN concat_ws(' ', concat_ws(', ', bm.ad_str1, bm.ad_str2, bm.ad_str3, bm.ad_city, bm.ad_st), ad_zip5, bm.ad_cntry) "
             "ELSE concat_ws(' ', concat_ws(', ', bm.ad_mail_str1, bm.ad_mail_str2, bm.ad_mail_str3, bm.ad_mail_city, bm.ad_mail_st), bm.ad_mail_zip5, bm.ad_mail_cntry) "
@@ -191,9 +254,18 @@ def _build_full_text_index_table(engine):
             "AS bstatus "
             "ON bm.cd_status = bstatus.cd_status) "
             "AS sta "
-            "ON ti.id_bus = sta.id_bus);")
-
-
+            "ON ti.id_bus = sta.id_bus "
+            #adding principal name to table
+            "LEFT JOIN (SELECT DISTINCT id_bus, principal_name FROM principalname " #not all business have principals (left join), select distinct principals (no multiple titles)
+            "GROUP BY id_bus, principal_name) "
+            "AS prin "
+            "ON ti.id_bus = prin.id_bus "
+            #adding filing date to table
+            "LEFT JOIN (SELECT id_bus, dt_filing, dt_filing2 FROM filingdate) "
+            "AS fl "
+            "ON ti.id_bus = fl.id_bus "
+            ");")
+        
 # Finally we add in the index on the ts_vector column and indicate
 def _build_table_indices(engine):
     with engine.connect() as con:
@@ -203,6 +275,7 @@ def _build_table_indices(engine):
 
 def _bus_filing_index(engine):
     with engine.connect() as con:
+        con.execute('DROP INDEX IF EXISTS filing_index;')
         con.execute('CREATE INDEX filing_index ON public.bus_filing USING btree(id_bus, cd_trans_type);')
 
 def _final_cleanup(engine):
@@ -268,29 +341,57 @@ def build_index(engine):
     class ForStatTrust(SOTSMixin, Base):
         pass
 
+    # --------------------------------------------------------------------------------------
+    # Business Status
+    # --------------------------------------------------------------------------------------
     class BusinessStatus(Base):
         __tablename__ = 'business_status'
         cd_status = Column(String, primary_key=True)
         description = Column(String)
 
+    # --------------------------------------------------------------------------------------
+    # Business Subtype
+    # --------------------------------------------------------------------------------------
     class BusinessSubtype(Base):
         __tablename__ = 'business_subtype'
         cd_subtype = Column(String, primary_key=True)
         description = Column(String)
 
+    # --------------------------------------------------------------------------------------
+    # Principal Name
+    # --------------------------------------------------------------------------------------
+
     class PrincipalNameIndex(Base):
         __table__ = create_mat_view(
             Base.metadata,
             "principal_name_index",
+           select([
+               Principal.primary_id, Principal.id_bus, 
+               cast('principal', String).label('table_name'),
+               cast('principal_name', String).label('index_name'),
+               cast('principal_name', String).label('search_type'),
+               func.to_tsvector(Principal.nm_name).label('document')
+           ])          
+        )
+        
+    # --------------------------------------------------------------------------------------
+    # Agent Name
+    # --------------------------------------------------------------------------------------
+    class AgentNameIndex(Base):
+        __table__ = create_mat_view(
+            Base.metadata,
+            "agent_name_index",
             select([
-                Principal.primary_id, Principal.id_bus,
-                cast('principal', String).label('table_name'),
-                cast('principal_name', String).label('index_name'),
-                cast('name', String).label('search_type'),
-                func.to_tsvector(Principal.nm_name).label('document')
+                BusMaster.primary_id, BusMaster.id_bus,
+                cast('bus_master', String).label('table_name'),
+                cast('agent_name', String).label('index_name'),
+                cast('agent_name', String).label('search_type'),
+                func.to_tsvector(BusMaster.nm_agt).label('document')
             ])
         )
-
+    # --------------------------------------------------------------------------------------
+    # Business Mailing Address
+    # --------------------------------------------------------------------------------------
     class BusMasterMailAddressIndex(Base):
         __table__ = create_mat_view(
             Base.metadata,
@@ -307,6 +408,9 @@ def build_index(engine):
             ])
         )
 
+    # --------------------------------------------------------------------------------------
+    # Place of Business Address
+    # --------------------------------------------------------------------------------------
     class BusMasterPlaceaOfBusinessAddressIndex(Base):
         __table__ = create_mat_view(
             Base.metadata,
@@ -319,6 +423,22 @@ def build_index(engine):
                 func.to_tsvector(func.CONCAT_WS(' ', BusMaster.ad_str1, BusMaster.ad_str2, BusMaster.ad_str3,
                                                 BusMaster.ad_city, BusMaster.ad_st,
                                                 BusMaster.ad_zip5, BusMaster.ad_cntry)).label('document')
+            ])
+        )
+
+    # --------------------------------------------------------------------------------------
+    # Place of Business City
+    # --------------------------------------------------------------------------------------
+    class BusMasterPlaceaOfBusinessCityIndex(Base):
+        __table__ = create_mat_view(
+            Base.metadata,
+            'busmaster_place_of_business_city_index',
+            select([
+                BusMaster.primary_id, BusMaster.id_bus,
+                cast('bus_master', String).label('table_name'),
+                cast('place_of_business_city', String).label('index_name'),
+                cast('city', String).label('search_type'),
+                func.to_tsvector(BusMaster.ad_city).label('document')
             ])
         )
 
@@ -385,7 +505,7 @@ def build_index(engine):
                 func.to_tsvector(BusMaster.id_bus).label('document')
             ])
         )
-
+        
     click.echo("Prep cleanup")
     cleanup_table_mat_views(engine)
     cleanup_index_tables(engine)
@@ -393,10 +513,16 @@ def build_index(engine):
 
     click.echo("Creating declared models")
     Base.metadata.create_all(engine)
+    
+    click.echo("Building Supplemental Tables")
+    _build_supp_tables(engine)
 
     click.echo("Joining Material Views")
     _join_index_material_view(engine)
-
+    
+    click.echo("Altering Tables")
+    _alter_tables(engine)
+    
     click.echo("Building Full Text Index")
     _build_full_text_index_table(engine)
 

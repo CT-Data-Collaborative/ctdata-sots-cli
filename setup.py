@@ -21,7 +21,7 @@ setup(
         'click>=6.7',
         'PyYaml==3.12',
         'SQLAlchemy==1.1.5',
-        'psycopg2==2.6.2',
+        'psycopg2==2.7.1',
         'python-dotenv==0.6.3',
         'unicodecsv==0.14.1'
         ],

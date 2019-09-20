@@ -35,7 +35,7 @@ tx_codes = [OrderedDict([('cd_trans_type', 'ACAS'),
                  ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
                  ('company_type', 'BANK')]), OrderedDict(
         [('cd_trans_type', 'BCORP'), ('label', 'BUSINESS FORMATION FOR BENEFIT CORPORATION'), ('stock', 'FALSE'),
-         ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'),
+         ('nonstock', 'FALSE'), ('domestic', 'FALSE'), ('foreign_company', 'FALSE'), ('benefit', 'TRUE'),
          ('company_type', 'BEN')]), OrderedDict(
         [('cd_trans_type', 'BN'), ('label', 'BUSINESS FORMATION FOR DOMESTIC BANK (NON-STOCK)'), ('stock', 'FALSE'),
          ('nonstock', 'TRUE'), ('domestic', 'TRUE'), ('foreign_company', 'FALSE'), ('benefit', 'FALSE'), ('company_type', 'BANK')]),

@@ -150,9 +150,10 @@ def loaddb(dbhost, dbuser, dbpass, dbname, dbport, data, schema):
               help='Name of database on host where data should be publish to.')
 @click.option('--dbport', default='5432',
               help="Port server uses for exposing database.")
-@click.option('--query', '-q', type=click.Choice(['Formations', 'Address']))
+@click.option('--query', '-q', type=click.Choice(['Formations', 'Address', 'Starts', 'Stops']))
 @click.option('--output', '-o', type=click.Path(),
               help='Output file to save results to')
+
 def extract_formations(dbhost, dbuser, dbpass, dbname, dbport, query, output):
     """Extract CT business formation data"""
     conn, cursor = connect_db(dbname, dbuser, dbpass, dbhost, dbport)
