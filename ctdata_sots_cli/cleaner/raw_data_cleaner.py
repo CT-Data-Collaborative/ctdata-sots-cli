@@ -1,3 +1,4 @@
+# coding=utf-8
 from os import walk, path
 from datetime import datetime, time
 import yaml
@@ -208,11 +209,30 @@ class cleaner(object):
         good_lines = []
         holding = ""
         for line in filtered_bad_lines:
-            if line.find("…") == 0:
-                new_line = line.replace("…", ", ")
+            edited = False
+            new = list(line)
+            #if line.find("…") == 0:
+            #    new_line = line.replace("…", ", ")
+            #else:
+            #   new_line = line.replace("\r", "")
+            #holding += new_line
+
+            # New block:
+            for c in range(0, len(new)):
+                if ord(new[c]) >= 128:
+                    edited = True
+                    new[c] = ","
+                    new.insert(c+1, " ")
+            #line = ''.join(new)
+
+            if edited:
+                new_line = ''.join(new)
             else:
                 new_line = line.replace("\r", "")
+
+            #new_line = line.replace("\r", "")
             holding += new_line
+
         if len(holding) == line_length:
             good_lines.append(holding)
             holding = ""

@@ -44,7 +44,6 @@ SELECT bus_filing.cd_trans_type, bus_filing.dt_filing,
     WHEN bus_filing.cd_trans_type = 'LLPFW' THEN 'Foreign Limited Liability Partnership'
     WHEN bus_filing.cd_trans_type = 'LPFC'  THEN 'Foreign Limited Partnership'
     WHEN bus_filing.cd_trans_type = 'STFC'  THEN 'Foreign Statutory Trust'
-    WHEN bus_filing.cd_trans_type = 'BFFTD'  THEN 'Forfeitures/Revocations'
     ELSE 'No' END AS ENTITY_TYPE,
     bus_master.nm_name,
     date_part('year', dt_filing) AS year_filing,
@@ -52,7 +51,7 @@ SELECT bus_filing.cd_trans_type, bus_filing.dt_filing,
 FROM bus_filing
 JOIN bus_master ON bus_filing.id_bus = bus_master.id_bus
 WHERE
-  cd_trans_type IN ('LCD', 'CDRS', 'CDRN', 'LLPR', 'LPC', 'STC', 'LCFC', 'CFWS', 'CFWN', 'LLPFW', 'LPFC', 'STFC', 'BFFTD') --dissolutions
+  cd_trans_type IN ('LCD', 'CDRS', 'CDRN', 'LLPR', 'LPC', 'STC', 'LCFC', 'CFWS', 'CFWN', 'LLPFW', 'LPFC', 'STFC') --dissolutions
 ORDER BY
   dt_filing DESC
 """
