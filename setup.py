@@ -19,7 +19,7 @@ setup(
     version='0.1',
     install_requires=[
         'click>=6.7',
-        'PyYaml==3.12',
+        'PyYaml==5.4',
         'SQLAlchemy==1.1.5',
         'psycopg2==2.7.1',
         'python-dotenv==0.6.3',
